@@ -7,8 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ResultsComponent implements OnInit {
 
-  list:Array<string>;
-
+  @Input() message:string;
   constructor() {}
   
   ngOnInit() {

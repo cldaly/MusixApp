@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ResultsComponent } from '../results/results.component';
 
 @Component({
   selector: 'app-search',
@@ -8,15 +7,21 @@ import { ResultsComponent } from '../results/results.component';
 })
 export class SearchComponent implements OnInit {
 
-  submitted:boolean;
+  searching:boolean;
+  criteria:string;
+  message:string;
 
-  constructor(private results:ResultsComponent) { }
+  type:string;
+
+  constructor() { }
 
   ngOnInit() {
-    this.submitted = false;
+    this.searching = false;
+    this.type = "artist";
   }
 
   search(){
-    this.submitted = true;
+    this.searching=true;
+    this.message = this.criteria;
   }
 }
