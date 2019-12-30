@@ -1,4 +1,12 @@
-<h1>App Component</h1>
-<button><a [routerLink]="['/search']" routerLinkActive="true" >Search</a></button>
-<button><a [routerLink]="['/recommendation']" routerLinkActive="true" >Recommendations</a></button>
-<router-outlet></router-outlet>
+<div class="main">
+  <h2 class="py-3 text-center">{{ title }}</h2>
+  <ul class="text-center list-inline py-3">
+    <li class="list-inline-item">
+      <a routerLink="/search"><button mat-raised-button color="primary">Search Playlists</button></a>
+    </li>
+    <li class="list-inline-item">
+      <a routerLink="/recommendation"><button mat-raised-button color="primary">Recommendations</button></a>
+    </li>
+  </ul>
+  <router-outlet></router-outlet>
+</div>
