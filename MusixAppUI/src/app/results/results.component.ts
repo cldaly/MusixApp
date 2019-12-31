@@ -20,11 +20,13 @@ export class ResultsComponent implements OnInit,OnChanges {
   constructor(private musicservice: MusicService) {}
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    this.isTrack=false;
-    this.isalbum=true;
-    if(this.searchtype==="artist"){
+    if(this.searchtype==="artist" && this.message !== undefined){
+      this.isTrack=false;
+      this.isalbum=true;
       this.albumlist=this.musicservice.getAlbumByArtist(this.message);
-    }else if(this.searchtype==="album"){
+    }else if(this.searchtype==="album" && this.message !== undefined){
+      this.isTrack=false;
+      this.isalbum=true;
       this.albumlist=this.musicservice.getAlbumByAlbumName(this.message);
     }
   }

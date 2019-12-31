@@ -12,7 +12,7 @@ export class MusicService {
 
   getAlbumByArtist(artistName:string){
     let albumlist: Array<Album> =[];
-    this.HttpClient.get('http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist='+artistName+'&api_key='+this.YOUR_API_KEY+'&format=json').subscribe(
+    this.HttpClient.get(`http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=${artistName}&api_key=${this.YOUR_API_KEY}&format=json`).subscribe(
       data => {
         for(let albm of data["topalbums"]["album"]){
           let album = new Album();
@@ -31,7 +31,7 @@ export class MusicService {
 
   getAlbumByAlbumName(albumName:string){
     let albumlist: Array<Album> =[];
-    this.HttpClient.get('http://ws.audioscrobbler.com/2.0/?method=album.search&album='+albumName+'&api_key='+this.YOUR_API_KEY+'&format=json').subscribe(
+    this.HttpClient.get(`http://ws.audioscrobbler.com/2.0/?method=album.search&album=${albumName}&api_key=${this.YOUR_API_KEY}&format=json`).subscribe(
       data => {
         for(let albm of data["results"]["albummatches"]["album"]){
           let album = new Album();
@@ -49,7 +49,7 @@ export class MusicService {
 
   getTracksByArtistAndAlbum(albumName:string, artist:string){
     let tracklist:Array<Tracks>=[];
-    this.HttpClient.get('http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key='+this.YOUR_API_KEY+'&artist='+artist+'&album='+albumName+'&format=json').subscribe(
+    this.HttpClient.get(`http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${this.YOUR_API_KEY}&artist=${artist}&album=${albumName}&format=json`).subscribe(
       data=>{
         for(let track of data["album"]["tracks"]["track"]){
           let tracks = new Tracks();
