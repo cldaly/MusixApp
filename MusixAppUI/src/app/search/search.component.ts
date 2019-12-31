@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-search',
@@ -13,7 +14,7 @@ export class SearchComponent implements OnInit {
 
   type:string;
 
-  constructor() { }
+  constructor(private app:AppComponent) { }
 
   ngOnInit() {
     this.searching = false;

@@ -22,7 +22,8 @@
                   (click)="showtracks(album.albumName,album.artist,album.imgUrl)"
                 />
                 <mat-card-actions>
-                  <button mat-button>Recommend</button>
+                  <button *ngIf="loggedIn" mat-button (click)="recommend(album)">Recommend</button>
+                  <button *ngIf="!loggedIn" mat-button>Sign in to recommend</button>
                 </mat-card-actions>
               </mat-card-content>
             </mat-card>

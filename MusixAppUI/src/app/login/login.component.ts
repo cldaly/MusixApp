@@ -25,7 +25,11 @@ export class LoginComponent implements OnInit {
     private router:Router,
     private app:AppComponent,
     private auth:AuthenticationService
-  ) { }
+  ) { 
+    if (this.auth.currentUserValue) { 
+      this.router.navigate(['/search']);
+    }
+  }
 
   ngOnInit() {
     this.email = new FormControl('',[Validators.required, Validators.email]);
@@ -41,9 +45,23 @@ export class LoginComponent implements OnInit {
   onSubmit(){
     if (this.loginForm.valid){
       this.loading = true;
-      console.log(this.loginForm.value);
-      this.invalid = true;
-      this.message = "test invalid box";
+      this.auth.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(data => {
+        if (data) {
+          this.app.display = "You have been logged in!";
+          this.router.navigate(['/']);
+        } else {
+          this.app.display = null;
+          this.invalid = true;
+          this.message = "Invalid Email or Password";
+        }
+      }, error => {
+        this.app.display = null;
+          this.invalid = true;
+          this.message = "Something went wrong...";
+          this.loading = false;
+      }, () => {
+        this.loading = false;
+      });
 
     }
   }
@@ -51,6 +69,5 @@ export class LoginComponent implements OnInit {
   close(){
     this.invalid = false;
     this.message = null;
-    this.loading = false;
   }
 }

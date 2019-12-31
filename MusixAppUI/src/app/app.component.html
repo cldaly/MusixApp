@@ -10,12 +10,12 @@
 <div class="main">
   <h2 class="py-3 text-center">Welcome to {{ title }}</h2>
 
-  <div *ngIf="display" class="message" (click)="close()">
+  <div *ngIf="display" class="display" (click)="close()">
     <p>{{ display }}</p>
     <i class="material-icons">close</i>
   </div>
 
-  <ul class="actions">
+  <ul *ngIf="(router.url !== '/login') && (router.url !== '/register')" class="actions">
     <li>
       <a routerLink="/search"><button mat-raised-button color="primary">Search Playlists</button></a>
     </li>

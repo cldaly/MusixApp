@@ -69,8 +69,7 @@ header nav li {
 
 .display {
     margin: 10px auto;
-    padding: 10px 20px;
-    margin: 15px auto -10px;
+    padding: 5px 15px;
     border: 1px solid #00479e;
     background-color: #c9e4ff;
     color: #002a5e;
@@ -81,7 +80,10 @@ header nav li {
     align-items: center;
     justify-content: space-between;
 }
-  
+
+.display p {
+    margin: 0.5em 0;
+}
   
 .display i {
     margin-right:-5px;

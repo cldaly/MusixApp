@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnChanges, SimpleChange } from '@angular/core
 import { MusicService } from '../services/music.service';
 import { Album } from '../models/album';
 import { Tracks } from '../models/tracks';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-results',
@@ -24,7 +25,18 @@ export class ResultsComponent implements OnInit,OnChanges {
 
   status:string;
 
-  constructor(private musicservice: MusicService) {
+  loggedIn:boolean;
+
+  constructor(
+    private musicservice: MusicService, 
+    private auth:AuthenticationService
+  ) 
+    {
+    if (this.auth.currentUserValue) { 
+      this.loggedIn = true;
+    } else {
+      this.loggedIn = false;
+    }
   }
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
@@ -68,4 +80,7 @@ export class ResultsComponent implements OnInit,OnChanges {
     this.isalbum=true;
   }
 
+  recommend(album:Album) {
+    console.log(album.albumName);
+  }
 }
