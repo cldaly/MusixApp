@@ -23,7 +23,7 @@
                 />
                 <mat-card-actions>
                   <button *ngIf="loggedIn" mat-button (click)="recommend(album)">Recommend</button>
-                  <button *ngIf="!loggedIn" mat-button>Sign in to recommend</button>
+                  <button *ngIf="!loggedIn" disabled mat-button>Sign in to recommend</button>
                 </mat-card-actions>
               </mat-card-content>
             </mat-card>

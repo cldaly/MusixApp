@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './models/user';
-import { AuthenticationService } from './services/authentication.service';
 import { Router } from '@angular/router';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +12,8 @@ export class AppComponent {
   currentUser:User;
 
   display:string;
-  constructor(private auth:AuthenticationService, private router:Router) { 
-    this.auth.currentUser.subscribe(user => {
+  constructor(private userService:UserService, private router:Router) { 
+    this.userService.currentUser.subscribe(user => {
       this.currentUser = user;
     });
   }
@@ -25,7 +25,7 @@ export class AppComponent {
   }
 
   logout(){
-    this.auth.logout();
+    this.userService.logout();
     this.display = "You have been logged out!";
   }
 }

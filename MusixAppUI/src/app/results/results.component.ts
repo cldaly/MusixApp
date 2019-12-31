@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnChanges, SimpleChange } from '@angular/core
 import { MusicService } from '../services/music.service';
 import { Album } from '../models/album';
 import { Tracks } from '../models/tracks';
-import { AuthenticationService } from '../services/authentication.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-results',
@@ -29,10 +29,10 @@ export class ResultsComponent implements OnInit,OnChanges {
 
   constructor(
     private musicservice: MusicService, 
-    private auth:AuthenticationService
+    private userService:UserService
   ) 
     {
-    if (this.auth.currentUserValue) { 
+    if (this.userService.currentUserValue) { 
       this.loggedIn = true;
     } else {
       this.loggedIn = false;

@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppComponent } from '../app.component';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { AuthenticationService } from '../services/authentication.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -24,10 +23,10 @@ export class LoginComponent implements OnInit {
   constructor(
     private router:Router,
     private app:AppComponent,
-    private auth:AuthenticationService
+    private userService:UserService
   ) { 
-    if (this.auth.currentUserValue) { 
-      this.router.navigate(['/search']);
+    if (this.userService.currentUserValue) { 
+      this.router.navigate(['/']);
     }
   }
 
@@ -48,7 +47,7 @@ export class LoginComponent implements OnInit {
       this.auth.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(data => {
         if (data) {
           this.app.display = "You have been logged in!";
-          this.router.navigate(['/']);
+          this.router.navigate(['/search']);
         } else {
           this.app.display = null;
           this.invalid = true;

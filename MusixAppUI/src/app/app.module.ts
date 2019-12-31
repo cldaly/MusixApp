@@ -21,6 +21,7 @@ import { MusicService } from './services/music.service';
 import { RecommendationService } from './services/recommendation.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { RegisterComponent } from './register/register.component';
     MatIconModule,
     ReactiveFormsModule
   ],
-  providers: [MusicService,RecommendationService],
+  providers: [MusicService,RecommendationService,UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
