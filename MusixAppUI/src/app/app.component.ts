@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MusicService } from './services/music.service';
+import { User } from './models/user';
+import { AuthenticationService } from './services/authentication.service';
+import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +9,18 @@ import { MusicService } from './services/music.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  constructor(private music:MusicService) {}
+  currentUser:User;
+
+  loginStatus:boolean;
+  display:string;
+  constructor(private auth:AuthenticationService) { }
+
   ngOnInit(): void {
   }
-  title = 'MusixAppUI';
+  
+  title = 'Musix App';
+
+  close(){
+    this.display = null;
+  }
 }
