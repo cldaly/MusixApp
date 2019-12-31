@@ -1,10 +1,25 @@
+<header>
+  <h2><a [routerLink]="['/']">Musix App</a></h2>
+  <nav>
+    <li *ngIf="!currentUser"><a [routerLink]="['/login']"  routerLinkActive="true">Sign in</a></li>
+    <li *ngIf="!currentUser"><a [routerLink]="['/register']" routerLinkActive="true" >Register</a></li>
+    <li *ngIf="currentUser"><a (click)="logout()">Logout</a></li>
+  </nav>
+</header>
+
 <div class="main">
-  <h2 class="py-3 text-center">{{ title }}</h2>
-  <ul class="text-center list-inline py-3">
-    <li class="list-inline-item">
+  <h2 class="py-3 text-center">Welcome to {{ title }}</h2>
+
+  <div *ngIf="display" class="message" (click)="close()">
+    <p>{{ display }}</p>
+    <i class="material-icons">close</i>
+  </div>
+
+  <ul class="actions">
+    <li>
       <a routerLink="/search"><button mat-raised-button color="primary">Search Playlists</button></a>
     </li>
-    <li class="list-inline-item">
+    <li>
       <a routerLink="/recommendation"><button mat-raised-button color="primary">Recommendations</button></a>
     </li>
   </ul>
