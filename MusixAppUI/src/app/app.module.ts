@@ -7,6 +7,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {MatCardModule} from '@angular/material/card';
+import {MatGridListModule} from '@angular/material/grid-list';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -33,7 +36,9 @@ import { RecommendationService } from './services/recommendation.service';
     MatInputModule,
     MatButtonModule,
     FormsModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatCardModule,
+    MatGridListModule
   ],
   providers: [MusicService,RecommendationService],
   bootstrap: [AppComponent]
