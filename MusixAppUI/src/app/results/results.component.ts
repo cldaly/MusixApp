@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChange } from '@angular/core';
 import { MusicService } from '../services/music.service';
 import { Album } from '../models/album';
 import { Tracks } from '../models/tracks';
@@ -59,6 +59,7 @@ export class ResultsComponent implements OnInit,OnChanges {
   }
 
   goback(){
+    this.status = 'complete';
     this.trackImage = null;
     this.trackArtist = null;
     this.trackAlbum = null;
