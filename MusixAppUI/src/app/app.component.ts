@@ -9,7 +9,6 @@ import { MusicService } from './services/music.service';
 export class AppComponent implements OnInit{
   constructor(private music:MusicService) {}
   ngOnInit(): void {
-    this.music.getArtistByName("Cher");
   }
   title = 'MusixAppUI';
 }
