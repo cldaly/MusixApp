@@ -4,7 +4,7 @@
 
       <h5 *ngIf="status === 'searching'">Searching for albums by {{ message }}...</h5>
       <h5 *ngIf="status === 'none'">No Albums Found for {{ message }}...</h5>
-      <div *ngIf="status === 'complete'" #res>
+      <div *ngIf="status === 'complete'">
         <h5>Click On Album to get Tracks</h5>
         <mat-grid-list cols="3" rowHeight="500px">
           <mat-grid-tile *ngFor="let album of albumlist">
@@ -35,8 +35,9 @@
             <mat-card-subtitle>{{ trackArtist }}</mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
-            <h4 *ngIf="tracklist?.length == 0">No Tracks...</h4>
-            <ol>
+            <h4 *ngIf="status === 'searching'">Loading tracks...</h4>
+            <h4 *ngIf="status === 'none'">Sorry, no tracks...</h4>
+            <ol *ngIf="status === 'complete'">
               <li *ngFor="let track of tracklist">
                 {{ track.trackName }}
               </li>
