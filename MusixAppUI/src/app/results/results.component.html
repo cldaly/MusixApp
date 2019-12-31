@@ -1,3 +1,40 @@
 <div class="results">
-<h4>{{ message }}</h4>
+    <div class="album" *ngIf="isalbum">
+        <h5>Click On Album to get Tracks</h5>
+          <mat-grid-list cols="3" rowHeight="300px">
+            <mat-grid-tile *ngFor="let album of albumlist">
+                <mat-card class="example-card" (click)="showtracks(album.albumName,album.artist)">
+                    <mat-card-header>
+                      <div mat-card-avatar class="example-header-image"></div>
+                      <mat-card-title>{{album.albumName}}</mat-card-title>
+                      <mat-card-subtitle>{{album.artist}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="{{album.imgUrl}}" alt="Photo of a Shiba Inu" width="100px" height="150px">
+                  </mat-card>
+            </mat-grid-tile>
+          </mat-grid-list>
+    </div>
+
+    <div class="Track" *ngIf="isTrack">
+        <h3>Tracks</h3>
+        <button (click)="goback()">GO Back</button>
+        <mat-grid-list cols="3" rowHeight="400px">
+            <mat-grid-tile *ngFor="let track of tracklist">
+                <mat-card class="example-card">
+                    <mat-card-header>
+                      <div mat-card-avatar class="example-header-image"></div>
+                      <mat-card-title>{{track.trackName}}</mat-card-title>
+                      <mat-card-subtitle>{{track.album}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="{{track.image}}" alt="Photo of a Shiba Inu" width="100px" height="150px">
+                    <mat-card-content>
+                        <h5>by {{track.artist}}</h5>
+                      </mat-card-content>
+                      <mat-card-actions>
+                        <button mat-button>Recommend</button>
+                      </mat-card-actions>
+                  </mat-card>
+            </mat-grid-tile>
+          </mat-grid-list>
+    </div>
 </div>
