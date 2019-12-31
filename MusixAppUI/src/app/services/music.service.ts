@@ -29,25 +29,26 @@ export class MusicService {
     let albumlist: Array<Album> =[];
     this.HttpClient.get(`http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=${artistName}&api_key=${this.YOUR_API_KEY}&format=json`)
       .subscribe(
-      (data) => {
-        
-        console.log(data);
-        for(let albm of data["topalbums"]["album"]){
-          let album = new Album();
-          album.albumName=albm["name"];
-          album.artist=albm["artist"]["name"];
-          if (albm["image"][2]["#text"] === "") {
-            album.imgUrl = '../assets/album.png';
-          } else {
-            album.imgUrl=albm["image"][3]["#text"];
-          }
-          
-          if(albm["name"]!=="(null)"){
-            albumlist.push(album);
+      data => {
+        if (data.hasOwnProperty("error")) {
+          this.setStatus('none');
+        } else {
+          for(let albm of data["topalbums"]["album"]){
+            let album = new Album();
+            album.albumName=albm["name"];
+            album.artist=albm["artist"]["name"];
+            if (albm["image"][2]["#text"] === "") {
+              album.imgUrl = '../assets/album.png';
+            } else {
+              album.imgUrl=albm["image"][3]["#text"];
+            }
+            
+            if(albm["name"]!=="(null)"){
+              albumlist.push(album);
+            }
           }
         }
-      }, (error) => {
-        console.log("ERROR");
+      }, error => {
         this.setStatus('none');
       }, () => {
         if (albumlist.length == 0) {
@@ -66,17 +67,21 @@ export class MusicService {
     let albumlist: Array<Album> =[];
     this.HttpClient.get(`http://ws.audioscrobbler.com/2.0/?method=album.search&album=${albumName}&api_key=${this.YOUR_API_KEY}&format=json`).subscribe(
       data => {
-        for(let albm of data["results"]["albummatches"]["album"]){
-          let album = new Album();
-          album.albumName=albm["name"];
-          album.artist=albm["artist"];
-          if (albm["image"][2]["#text"] === "") {
-            album.imgUrl = '../assets/album.png';
-          } else {
-            album.imgUrl=albm["image"][3]["#text"];
-          }
-          if(albm["name"]!=="(null)"){
-            albumlist.push(album);
+        if (data.hasOwnProperty("error")) {
+          this.setStatus('none');
+        } else {
+          for(let albm of data["results"]["albummatches"]["album"]){
+            let album = new Album();
+            album.albumName=albm["name"];
+            album.artist=albm["artist"];
+            if (albm["image"][2]["#text"] === "") {
+              album.imgUrl = '../assets/album.png';
+            } else {
+              album.imgUrl=albm["image"][3]["#text"];
+            }
+            if(albm["name"]!=="(null)"){
+              albumlist.push(album);
+            }
           }
         }
       }, error => {
@@ -97,13 +102,17 @@ export class MusicService {
     let tracklist:Array<Tracks>=[];
     this.HttpClient.get(`http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=${this.YOUR_API_KEY}&artist=${artist}&album=${albumName}&format=json`).subscribe(
       data=>{
-        for(let track of data["album"]["tracks"]["track"]){
-          let tracks = new Tracks();
-          tracks.album = data["album"]["name"];
-          tracks.artist = data["album"]["artist"];
-          tracks.image = data["album"]["image"][2]["#text"];
-          tracks.trackName = track["name"];
-          tracklist.push(tracks);
+        if (data.hasOwnProperty("error")) {
+          this.setStatus('none');
+        } else {
+          for(let track of data["album"]["tracks"]["track"]){
+            let tracks = new Tracks();
+            tracks.album = data["album"]["name"];
+            tracks.artist = data["album"]["artist"];
+            tracks.image = data["album"]["image"][2]["#text"];
+            tracks.trackName = track["name"];
+            tracklist.push(tracks);
+          }
         }
       }, error => {
         this.setStatus('none');
