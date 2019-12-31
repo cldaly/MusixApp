@@ -14,34 +14,55 @@ export class ResultsComponent implements OnInit,OnChanges {
   @Input() searchtype:string;
   isalbum:boolean=false;
   isTrack:boolean=false;
+
   albumlist:Array<Album>=[];
   tracklist:Array<Tracks>=[];
 
-  constructor(private musicservice: MusicService) {}
+  trackImage:string;
+  trackArtist:string;
+  trackAlbum:string;
+
+  status:string;
+
+  constructor(private musicservice: MusicService) {
+  }
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    if(this.searchtype==="artist" && this.message !== undefined){
-      this.isTrack=false;
-      this.isalbum=true;
-      this.albumlist=this.musicservice.getAlbumByArtist(this.message);
-    }else if(this.searchtype==="album" && this.message !== undefined){
-      this.isTrack=false;
-      this.isalbum=true;
-      this.albumlist=this.musicservice.getAlbumByAlbumName(this.message);
+    if (this.message !== undefined && this.message !== ""){
+      if(this.searchtype==="artist"){
+        this.isTrack=false;
+        this.isalbum=true;
+        this.albumlist=this.musicservice.getAlbumByArtist(this.message);
+      }else if(this.searchtype==="album"){
+        this.isTrack=false;
+        this.isalbum=true;
+        this.albumlist=this.musicservice.getAlbumByAlbumName(this.message);
+      }
     }
   }
 
   ngOnInit() {
-    
+    this.musicservice.getStatus().subscribe(value => {
+      this.status = value;
+    });
   }
 
-  showtracks(albumName:string,artist:string){
+  showtracks(albumName:string,artist:string,albumImage:string){
     this.tracklist=this.musicservice.getTracksByArtistAndAlbum(albumName,artist);
+    
+    this.trackImage = albumImage;
+    this.trackArtist = artist;
+    this.trackAlbum = albumName;
+
     this.isalbum=false;
     this.isTrack=true;
   }
 
   goback(){
+    this.trackImage = null;
+    this.trackArtist = null;
+    this.trackAlbum = null;
+
     this.isTrack=false;
     this.isalbum=true;
   }
