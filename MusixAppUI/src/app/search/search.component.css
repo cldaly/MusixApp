@@ -1,0 +1,26 @@
+.search-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    margin: 15px auto;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 400px;
+    margin: 20px auto;
+}
+.form-container mat-form-field, .form-container button {
+    width: 100%;
+    margin: 0 10px;
+}
+
+mat-button-toggle {
+    font-size: 0.9em;
+}
+
