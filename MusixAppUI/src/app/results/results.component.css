@@ -1,5 +1,60 @@
 .results {
     margin: 20px auto;
-    width: 800px;
+    width: 1200px;
+    max-width: 100%;
     text-align: center;
+}
+
+.album-card {
+    width: 300px;
+    min-height: 400px;
+    padding: 20px;
+}
+
+.album-image {
+    cursor: pointer;
+    height: 275px;
+    width: auto;
+}
+
+.Track {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mat-card-header {
+    cursor: pointer;
+    margin-bottom: 16px;
+}
+
+.tracklist-card {
+    width: 400px;
+    padding: 20px;
+}
+
+.tracklist-image {
+    border-radius: 0;
+    height: 60px;
+    width: auto;
+}
+
+.close {
+    position: relative;
+    float: right;
+    cursor: pointer;
+    opacity: 0.5;
+    font-size: 0.9em;
+    transition: opacity 0.2s;
+}
+
+.close:hover {
+    opacity: 1;
+    transition: opacity 0.2s;
+}
+
+mat-card-content ol {
+    margin-left: 40px;
+    width: 300px;
+    text-align: left;
 }

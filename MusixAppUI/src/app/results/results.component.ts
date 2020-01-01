@@ -1,7 +1,8 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChange } from '@angular/core';
 import { MusicService } from '../services/music.service';
 import { Album } from '../models/album';
 import { Tracks } from '../models/tracks';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-results',
@@ -14,34 +15,72 @@ export class ResultsComponent implements OnInit,OnChanges {
   @Input() searchtype:string;
   isalbum:boolean=false;
   isTrack:boolean=false;
+
   albumlist:Array<Album>=[];
   tracklist:Array<Tracks>=[];
 
-  constructor(private musicservice: MusicService) {}
+  trackImage:string;
+  trackArtist:string;
+  trackAlbum:string;
+
+  status:string;
+
+  loggedIn:boolean;
+
+  constructor(
+    private musicservice: MusicService, 
+    private userService:UserService
+  ) 
+    {
+    if (this.userService.currentUserValue) { 
+      this.loggedIn = true;
+    } else {
+      this.loggedIn = false;
+    }
+  }
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    this.isTrack=false;
-    this.isalbum=true;
-    if(this.searchtype==="artist"){
-      this.albumlist=this.musicservice.getAlbumByArtist(this.message);
-    }else if(this.searchtype==="album"){
-      this.albumlist=this.musicservice.getAlbumByAlbumName(this.message);
+    if (this.message !== undefined && this.message !== ""){
+      if(this.searchtype==="artist"){
+        this.isTrack=false;
+        this.isalbum=true;
+        this.albumlist=this.musicservice.getAlbumByArtist(this.message);
+      }else if(this.searchtype==="album"){
+        this.isTrack=false;
+        this.isalbum=true;
+        this.albumlist=this.musicservice.getAlbumByAlbumName(this.message);
+      }
     }
   }
 
   ngOnInit() {
-    
+    this.musicservice.getStatus().subscribe(value => {
+      this.status = value;
+    });
   }
 
-  showtracks(albumName:string,artist:string){
+  showtracks(albumName:string,artist:string,albumImage:string){
     this.tracklist=this.musicservice.getTracksByArtistAndAlbum(albumName,artist);
+    
+    this.trackImage = albumImage;
+    this.trackArtist = artist;
+    this.trackAlbum = albumName;
+
     this.isalbum=false;
     this.isTrack=true;
   }
 
   goback(){
+    this.status = 'complete';
+    this.trackImage = null;
+    this.trackArtist = null;
+    this.trackAlbum = null;
+
     this.isTrack=false;
     this.isalbum=true;
   }
 
+  recommend(album:Album) {
+    console.log(album.albumName);
+  }
 }

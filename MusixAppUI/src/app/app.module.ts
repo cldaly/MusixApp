@@ -7,10 +7,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import {MatCardModule} from '@angular/material/card';
-import {MatGridListModule} from '@angular/material/grid-list';
-
-
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,13 +19,18 @@ import { RecommendationComponent } from './recommendation/recommendation.compone
 import { ResultsComponent } from './results/results.component';
 import { MusicService } from './services/music.service';
 import { RecommendationService } from './services/recommendation.service';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
     RecommendationComponent,
-    ResultsComponent
+    ResultsComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -38,9 +43,11 @@ import { RecommendationService } from './services/recommendation.service';
     FormsModule,
     MatButtonToggleModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatIconModule,
+    ReactiveFormsModule
   ],
-  providers: [MusicService,RecommendationService],
+  providers: [MusicService,RecommendationService,UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
