@@ -10,7 +10,7 @@
     background-color: #fff;
     border-radius: 10px;
     border: 1px solid #777;
-    width: 350px;
+    width: 450px;
     padding: 20px 20px;
 }
 
@@ -18,9 +18,9 @@
     text-align: center;
 }
 
-.back {
-    margin-top: 20px;
-    background-color: white;
+mat-form-field {
+    font-size: 0.95em;
+    width: 250px;
 }
 
 #login-btn  {
@@ -55,7 +55,7 @@
     padding: 5px 15px;
     margin: 15px auto -10px;
     border: 1px solid #9e0000;
-    background-color: #ffc4c4;
+    background-color: #ffd1d1;
     color: #570000;
     border-radius: 10px;
     width: 350px;

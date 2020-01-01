@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
   onSubmit(){
     if (this.loginForm.valid){
       this.loading = true;
-      this.auth.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(data => {
+      this.userService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(data => {
         if (data) {
           this.app.display = "You have been logged in!";
           this.router.navigate(['/search']);
