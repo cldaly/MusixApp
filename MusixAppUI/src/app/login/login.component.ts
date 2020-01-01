@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppComponent } from '../app.component';
 import { UserService } from '../services/user.service';
@@ -12,10 +12,8 @@ import { UserService } from '../services/user.service';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  submitted:boolean;
   loading:boolean;
-
-  email:FormControl;
-  password:FormControl;
 
   message:string;
   invalid:boolean;
@@ -23,37 +21,40 @@ export class LoginComponent implements OnInit {
   constructor(
     private router:Router,
     private app:AppComponent,
-    private userService:UserService
+    private userService:UserService,
+    private formBuilder:FormBuilder
   ) { 
     if (this.userService.currentUserValue) { 
       this.router.navigate(['/']);
     }
   }
 
+  get f() { return this.loginForm.controls; }
+
   ngOnInit() {
-    this.email = new FormControl('',[Validators.required, Validators.email]);
-    this.password = new FormControl('',Validators.required);
-    this.loginForm = new FormGroup({
-      email: this.email,
-      password: this.password
+    this.loginForm = this.formBuilder.group({
+      email: ['',[Validators.required, Validators.email]],
+      password: ['',Validators.required]
     });
+    this.submitted = false;
     this.loading = false;
     this.invalid = false;
   }
 
   onSubmit(){
+    this.submitted = true;
     if (this.loginForm.valid){
       this.loading = true;
       this.userService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(data => {
         if (data) {
           this.app.display = "You have been logged in!";
-          this.router.navigate(['/search']);
+          this.router.navigate(['/']);
         } else {
           this.app.display = null;
           this.invalid = true;
           this.message = "Invalid Email or Password";
         }
-      }, error => {
+      }, () => {
         this.app.display = null;
           this.invalid = true;
           this.message = "Something went wrong...";
