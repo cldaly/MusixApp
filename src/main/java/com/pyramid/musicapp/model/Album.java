@@ -15,6 +15,7 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Album {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	private String albumName;
 	private String artist;
