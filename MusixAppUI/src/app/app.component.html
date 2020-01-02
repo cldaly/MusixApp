@@ -1,9 +1,9 @@
 <header>
   <h2><a [routerLink]="['/']">Musix App</a></h2>
   <nav>
-    <li *ngIf="!currentUser"><a [routerLink]="['/login']"  routerLinkActive="true">Sign in</a></li>
-    <li *ngIf="!currentUser"><a [routerLink]="['/register']" routerLinkActive="true" >Register</a></li>
-    <li *ngIf="currentUser"><a (click)="logout()">Logout</a></li>
+    <li *ngIf="!isLoggedIn"><a [routerLink]="['/login']"  routerLinkActive="true">Sign in</a></li>
+    <li *ngIf="!isLoggedIn"><a [routerLink]="['/register']" routerLinkActive="true" >Register</a></li>
+    <li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>
   </nav>
 </header>
 

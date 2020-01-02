@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
       private app:AppComponent,
       private formBuilder:FormBuilder
   ) { 
-    if (this.userService.currentUserValue) { 
+    if (this.userService.getCurrentLoginStatus) { 
       this.router.navigate(['/']);
     }
   }
@@ -34,6 +34,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       email : ['', [Validators.required, Validators.email]],
+      picture : ['', Validators.required],
       password : ['',[Validators.required, Validators.minLength(6)]],
       confPassword : ['',[Validators.required, Validators.minLength(6)]]
     }, {

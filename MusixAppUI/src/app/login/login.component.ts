@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     private userService:UserService,
     private formBuilder:FormBuilder
   ) { 
-    if (this.userService.currentUserValue) { 
+    if (this.userService.getCurrentLoginStatus) { 
       this.router.navigate(['/']);
     }
   }
@@ -47,25 +47,16 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid){
       this.loading = true;
       this.userService.login(new User(this.loginForm.value.email, this.loginForm.value.password)).subscribe(data => {
-        localStorage.setItem('Token', data["jwt"]);
-        localStorage.setItem('userid',data["user_id"]);
-        if (data) {
-          this.app.display = "You have been logged in!";
-          this.router.navigate(['/']);
-        } else {
-          this.app.display = null;
-          this.invalid = true;
-          this.message = "Invalid Email or Password";
-        }
+        this.app.display = "You have been logged in!";
+        this.router.navigate(['/']);
       }, error =>{
-        console.log(error);
-      },() => {
         this.app.display = null;
-          this.invalid = true;
-          this.message = "Something went wrong...";
-          this.loading = false;
+        this.invalid = true;
+        this.message = error.error.message;
+        this.loading = false;
+      },() => {
+        this.loading = false;
       });
-
     }
   }
 

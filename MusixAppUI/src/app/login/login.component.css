@@ -6,16 +6,23 @@
 }
 
 .login-page {
-    margin: 35px auto 0;
-    background-color: #fff;
+    margin: 25px auto 0;
+    background-color: #fefefe;
     border-radius: 10px;
     border: 1px solid #777;
     width: 450px;
-    padding: 20px 20px;
+    padding: 20px 15px;
 }
 
 .login-page h4 {
-    text-align: center;
+    font-size: 1.1em;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    margin: 10px 40px;
+    padding-bottom: 10px;
+    color: #555;
+    border-bottom: 1px solid #ccc;
+    text-align: left;
 }
 
 mat-form-field {
@@ -58,7 +65,7 @@ mat-form-field {
     background-color: #ffd1d1;
     color: #570000;
     border-radius: 10px;
-    width: 350px;
+    width: 450px;
     display: flex;
     flex-direction: row;
     align-items: center;

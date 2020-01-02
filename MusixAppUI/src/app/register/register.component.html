@@ -34,6 +34,11 @@
             </mat-error>
         </mat-form-field>
 
+        <div class="upload-field">
+            <label for="picture">Picture</label>
+            <input type="file" formControlName="picture" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.picture.errors }" />
+        </div>
+
         <div>
             <button id="register-btn" mat-raised-button color="primary" [disabled]="loading">
                 <span *ngIf="loading" class="loading"></span>
