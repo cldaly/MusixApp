@@ -23,11 +23,10 @@ public class AlbumController {
 	@Autowired
 	private AlbumService as;
 	
-	@GetMapping("/{albumId}")
-	public Optional<Album> getAlbumById(@PathVariable int albumId) {
-		return as.getAlbumById(albumId);
+	@GetMapping("/hello")
+	public String hello() {
+		return "hello";
 	}
-	
 	@GetMapping
 	public List<Album> getAllAlbums() {
 		return as.getAllAlbums();

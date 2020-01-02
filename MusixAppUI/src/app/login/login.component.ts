@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppComponent } from '../app.component';
 import { UserService } from '../services/user.service';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-login',
@@ -45,7 +46,9 @@ export class LoginComponent implements OnInit {
     this.submitted = true;
     if (this.loginForm.valid){
       this.loading = true;
-      this.userService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe(data => {
+      this.userService.login(new User(this.loginForm.value.email, this.loginForm.value.password)).subscribe(data => {
+        localStorage.setItem('Token', data["jwt"]);
+        localStorage.setItem('userid',data["user_id"]);
         if (data) {
           this.app.display = "You have been logged in!";
           this.router.navigate(['/']);
@@ -54,13 +57,13 @@ export class LoginComponent implements OnInit {
           this.invalid = true;
           this.message = "Invalid Email or Password";
         }
-      }, () => {
+      }, error =>{
+        console.log(error);
+      },() => {
         this.app.display = null;
           this.invalid = true;
           this.message = "Something went wrong...";
           this.loading = false;
-      }, () => {
-        this.loading = false;
       });
 
     }
