@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pyramid.musicapp.model.Album;
@@ -23,18 +24,15 @@ public class AlbumController {
 	@Autowired
 	private AlbumService as;
 	
-	@GetMapping("/hello")
-	public String hello() {
-		return "hello";
-	}
-	@GetMapping
-	public List<Album> getAllAlbums() {
-		return as.getAllAlbums();
+
+	@GetMapping("/getalbums")
+	public List<Album> getAllAlbums(@RequestParam(name="user_id")Long userId) throws Exception {
+		return as.getAllAlbums(userId);
 	}
 	
-	@PostMapping
-	public Album addAlbum(@RequestBody Album album) {
-		return as.saveAlbum(album);
+	@PostMapping("addalbum")
+	public void addAlbum(@RequestBody Album album, @RequestParam(name="user_id")Long userId) throws Exception {
+		 as.saveAlbum(album,userId);
 	}
 	
 	@DeleteMapping("/{albumId}")
