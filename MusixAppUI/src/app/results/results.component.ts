@@ -79,7 +79,7 @@ export class ResultsComponent implements OnInit,OnChanges {
 
   recommend(album:Album) {
     this.recommendService.addalbum(album).subscribe(data=>{
-
+      alert("Album is Saved");
     },
     error=>{
       console.log(error);

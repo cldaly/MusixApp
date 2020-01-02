@@ -29,12 +29,12 @@ public class AlbumController {
 		return as.getAllAlbums(userId);
 	}
 	
-	@PostMapping("addalbum")
+	@PostMapping("/addalbum")
 	public void addAlbum(@RequestBody Album album, @RequestParam(name="user_id")Long userId) throws Exception {
 		 as.saveAlbum(album,userId);
 	}
 	
-	@DeleteMapping("/{albumId}")
+	@DeleteMapping("/delete/{albumId}")
 	public String deleteAlbum(@PathVariable int albumId) {
 		as.deleteAlbum(albumId);
 		return "Album Successfully Deleted";
