@@ -9,6 +9,7 @@
     width: 300px;
     min-height: 400px;
     padding: 20px;
+    background-color: #fefefe;
 }
 
 .album-image {
@@ -26,6 +27,12 @@
 .mat-card-header {
     cursor: pointer;
     margin-bottom: 16px;
+}
+
+.mat-card-header .mat-card-title {
+    font-size: 1.5em;
+    font-weight: 400;
+    letter-spacing: 0.05em;
 }
 
 .tracklist-card {
