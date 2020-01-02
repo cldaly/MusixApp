@@ -3,6 +3,7 @@ import { MusicService } from '../services/music.service';
 import { Album } from '../models/album';
 import { Tracks } from '../models/tracks';
 import { UserService } from '../services/user.service';
+import { RecommendationService } from '../services/recommendation.service';
 
 @Component({
   selector: 'app-results',
@@ -29,7 +30,8 @@ export class ResultsComponent implements OnInit,OnChanges {
 
   constructor(
     private musicservice: MusicService, 
-    private userService:UserService
+    private userService:UserService,
+    private recommendService:RecommendationService
   ) {
     this.userService.getLoginStatus().subscribe(value => this.loggedIn = value);
   }
@@ -76,6 +78,11 @@ export class ResultsComponent implements OnInit,OnChanges {
   }
 
   recommend(album:Album) {
-    console.log(album.albumName);
+    this.recommendService.addalbum(album).subscribe(data=>{
+
+    },
+    error=>{
+      console.log(error);
+    });
   }
 }

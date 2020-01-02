@@ -21,9 +21,6 @@ public class User {
 	private String password;
 	private byte[] profileImage;
 
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="UID")
-	private List<Album> albums;
 
 	public Long getId() {
 		return id;
@@ -57,13 +54,7 @@ public class User {
 		this.profileImage = profileImage;
 	}
 
-	public List<Album> getAlbums() {
-		return albums;
-	}
 
-	public void setAlbums(List<Album> albums) {
-		this.albums = albums;
-	}
     
     
 	
