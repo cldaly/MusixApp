@@ -4,6 +4,7 @@ import { Album } from '../models/album';
 import { Tracks } from '../models/tracks';
 import { UserService } from '../services/user.service';
 import { RecommendationService } from '../services/recommendation.service';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-results',
@@ -20,9 +21,7 @@ export class ResultsComponent implements OnInit,OnChanges {
   albumlist:Array<Album>=[];
   tracklist:Array<Tracks>=[];
 
-  trackImage:string;
-  trackArtist:string;
-  trackAlbum:string;
+  a:Album;
 
   status:string;
 
@@ -36,7 +35,7 @@ export class ResultsComponent implements OnInit,OnChanges {
     this.userService.getLoginStatus().subscribe(value => this.loggedIn = value);
   }
 
-  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+  ngOnChanges(): void {
     if (this.message !== undefined && this.message !== ""){
       if(this.searchtype==="artist"){
         this.isTrack=false;
@@ -56,22 +55,17 @@ export class ResultsComponent implements OnInit,OnChanges {
     });
   }
 
-  showtracks(albumName:string,artist:string,albumImage:string){
-    this.tracklist=this.musicservice.getTracksByArtistAndAlbum(albumName,artist);
-    
-    this.trackImage = albumImage;
-    this.trackArtist = artist;
-    this.trackAlbum = albumName;
+  showtracks(album:Album){
+    this.a = album;
 
+    this.tracklist=this.musicservice.getTracksByArtistAndAlbum(album.albumName,album.artist);
     this.isalbum=false;
     this.isTrack=true;
   }
 
   goback(){
     this.status = 'complete';
-    this.trackImage = null;
-    this.trackArtist = null;
-    this.trackAlbum = null;
+    this.a = null
 
     this.isTrack=false;
     this.isalbum=true;
@@ -79,7 +73,7 @@ export class ResultsComponent implements OnInit,OnChanges {
 
   recommend(album:Album) {
     this.recommendService.addalbum(album).subscribe(data=>{
-      alert("Album is Saved");
+      alert(`${album.albumName} has been saved!`);
     },
     error=>{
       console.log(error);

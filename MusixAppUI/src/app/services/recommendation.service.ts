@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Album } from '../models/album';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecommendationService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient) {}
 
   addalbum(album:Album):Observable<Album>{
     let params = new HttpParams().append('user_id',localStorage.getItem("userid"))
                   .append('Authorization','Bearer '+localStorage.getItem("Token"));
-   return this.http.post<Album>("http://localhost:8080/albums/addalbum",album, {params});
+    return this.http.post<Album>("http://localhost:8080/albums/addalbum",album, {params});
   }
 
   getalbums() : Observable<Array<Album>>{

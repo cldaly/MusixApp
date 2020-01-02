@@ -9,7 +9,7 @@
         <mat-grid-list cols="3" rowHeight="500px">
           <mat-grid-tile *ngFor="let album of albumlist">
             <mat-card class="album-card">
-              <mat-card-header (click)="showtracks(album.albumName,album.artist,album.imgUrl)">
+              <mat-card-header (click)="showtracks(album)">
                 <mat-card-title>{{album.albumName}}</mat-card-title>
                 <mat-card-subtitle>{{album.artist}}</mat-card-subtitle>
               </mat-card-header>
@@ -19,7 +19,7 @@
                   class="album-image" 
                   src="{{album.imgUrl}}" 
                   alt="Photo of a Shiba Inu"
-                  (click)="showtracks(album.albumName,album.artist,album.imgUrl)"
+                  (click)="showtracks(album)"
                 />
                 <mat-card-actions>
                   <button matTooltip="Login to recommend this album" [matTooltipDisabled]="loggedIn" mat-button (click)="recommend(album)">Recommend</button>
@@ -35,9 +35,13 @@
         <mat-card class="tracklist-card">
           <span (click)="goback()" class="close">Close</span>
           <mat-card-header>
-            <img mat-card-avatar class="tracklist-image" src="{{ trackImage }}" alt="Photo of a Shiba Inu">
-            <mat-card-title>{{ trackAlbum }}</mat-card-title>
-            <mat-card-subtitle>{{ trackArtist }}</mat-card-subtitle>
+            <img mat-card-avatar class="tracklist-image" src="{{ a.imgUrl }}" alt="Photo of a Shiba Inu">
+            <mat-card-title>{{ a.albumName }}</mat-card-title>
+            <mat-card-subtitle>{{ a.artist }}</mat-card-subtitle>
+            <mat-card-subtitle *ngIf="loggedIn">
+              <button matTooltip="Login to recommend this album" [matTooltipDisabled]="loggedIn" 
+                mat-button color="primary" (click)="recommend(a)">Recommend</button>
+            </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>
             <h4 *ngIf="status === 'searching'">Loading tracks...</h4>

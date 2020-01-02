@@ -65,11 +65,13 @@ export class RegisterComponent implements OnInit {
         this.invalid = true;
         this.message = error.error.message;
         this.loading=false;
-        ;
       },() => {
         this.loading=false;
       });
     }
   }
-
+  close() {
+    this.message = undefined;
+    this.invalid = false;
+  }
 }

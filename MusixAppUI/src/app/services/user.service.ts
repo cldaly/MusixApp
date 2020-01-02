@@ -11,7 +11,11 @@ export class UserService {
   private currentLoginStatus:BehaviorSubject<boolean>;
 
   constructor(private http: HttpClient) {
-    this.currentLoginStatus = new BehaviorSubject<boolean>(false);
+    if (!localStorage.getItem("Token")) {
+      this.currentLoginStatus = new BehaviorSubject<boolean>(false);
+    } else {
+      this.currentLoginStatus = new BehaviorSubject<boolean>(true);
+    }
   }
 
   public get getCurrentLoginStatus(): boolean {

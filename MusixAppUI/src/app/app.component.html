@@ -17,10 +17,10 @@
 
   <ul *ngIf="(router.url !== '/login') && (router.url !== '/register')" class="actions">
     <li>
-      <a routerLink="/search"><button mat-raised-button color="primary">Search Playlists</button></a>
+      <button routerLink="/search" mat-raised-button color="primary">Search Albums</button>
     </li>
-    <li>
-      <a routerLink="/recommendation"><button mat-raised-button color="primary">Recommendations</button></a>
+    <li matTooltip="Login to recommend this album" [matTooltipDisabled]="isLoggedIn" >
+      <button routerLink="/recommendation" [disabled]="!isLoggedIn" mat-raised-button color="primary">Recommendations</button>
     </li>
   </ul>
   <router-outlet></router-outlet>

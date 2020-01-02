@@ -9,13 +9,13 @@ import { UserService } from './services/user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  isLoggedIn:boolean = false;
+  isLoggedIn:boolean;
 
   display:string;
   constructor(private userService:UserService, private router:Router) { 
     this.userService.getLoginStatus().subscribe(value => {
       this.isLoggedIn = value;
-    })
+    });
   }
   
   title = 'Musix App';
