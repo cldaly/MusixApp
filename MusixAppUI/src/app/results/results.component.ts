@@ -30,13 +30,8 @@ export class ResultsComponent implements OnInit,OnChanges {
   constructor(
     private musicservice: MusicService, 
     private userService:UserService
-  ) 
-    {
-    if (this.userService.currentUserValue) { 
-      this.loggedIn = true;
-    } else {
-      this.loggedIn = false;
-    }
+  ) {
+    this.userService.getLoginStatus().subscribe(value => this.loggedIn = value);
   }
 
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {

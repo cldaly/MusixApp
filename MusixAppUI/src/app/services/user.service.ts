@@ -1,32 +1,44 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private currentUserSubject:BehaviorSubject<User>;
-  public currentUser:Observable<User>;
+  private currentLoginStatus:BehaviorSubject<boolean>;
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-    this.currentUser = this.currentUserSubject.asObservable();
+    this.currentLoginStatus = new BehaviorSubject<boolean>(false);
   }
 
-  public get currentUserValue(): User {
-    return this.currentUserSubject.value;
+  public get getCurrentLoginStatus(): boolean {
+    return this.currentLoginStatus.value;
+  }
+
+  getLoginStatus():Observable<boolean> {
+    return this.currentLoginStatus.asObservable();
+  } 
+
+  setLoginStatus(isLoggedIn:boolean):void {
+    this.currentLoginStatus.next(isLoggedIn);
   }
 
   login(user:User) {
-    return this.http.post<any>('http://localhost:8080/users/authenticate',user);
+    return this.http.post<any>('http://localhost:8080/users/authenticate',user).pipe(map(data => {
+      localStorage.setItem('Token', data["jwt"]);
+      localStorage.setItem('userid',data["user_id"]);
+      this.setLoginStatus(true);
+      return data;
+    }));
   }
   
   logout(){
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
+    localStorage.removeItem('Token');
+    localStorage.removeItem('userid');
+    this.setLoginStatus(false);
   }
 
   register(user:User) {
