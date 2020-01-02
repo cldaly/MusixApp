@@ -54,21 +54,19 @@ export class RegisterComponent implements OnInit {
         this.registerForm.value.password
       );
       this.userService.register(newUser).subscribe(data => {
-        if (data.registered) {
-          this.userService.login(newUser.email, newUser.password).subscribe(data => {
+        
+          this.userService.login(new User(newUser.email,newUser.password)).subscribe(data => {
             this.app.display="You have been registered!";
             this.router.navigate(['/']);
           });
-        } else {
-          this.invalid = true;
-          this.message = data.message;
-        }
       }, error => {
         console.log(error);
         this.invalid = true;
-        this.message = "Something went wrong";
-      }, () => {
-        this.loading = false;
+        this.message = error.error.message;
+        this.loading=false;
+        ;
+      },() => {
+        this.loading=false;
       });
     }
   }

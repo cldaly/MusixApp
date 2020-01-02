@@ -20,14 +20,8 @@ export class UserService {
     return this.currentUserSubject.value;
   }
 
-  login(email:string, password:string) {
-    return this.http.post<any>('http://localhost:8080/users/authenticate',{ email, password }).pipe(map(user => {
-      if (user && user.token) {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(user);
-      }
-      return user;
-    }));
+  login(user:User) {
+    return this.http.post<any>('http://localhost:8080/users/authenticate',user);
   }
   
   logout(){
@@ -36,6 +30,6 @@ export class UserService {
   }
 
   register(user:User) {
-    return this.http.post<any>('http://localhost:8080/users', user);
+    return this.http.post<any>('http://localhost:8080/users/adduser', user);
   }
 }

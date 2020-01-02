@@ -17,10 +17,6 @@ public class AlbumService {
 	@Autowired
 	private AlbumCrudRepository acr;
 	
-	
-	public Optional<Album> getAlbumById(int id) {
-		return acr.findById(id);
-	}
 
 
 	public Album saveAlbum(Album album) {
@@ -32,6 +28,7 @@ public class AlbumService {
 		acr.findAll().forEach(albums::add);
 		return albums;
 	}
+	
 	public String deleteAlbum(int id) {
 		acr.deleteById(id);
 		return "Album Successfully Deleted";
