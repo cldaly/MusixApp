@@ -1,13 +1,18 @@
 package com.pyramid.musicapp.controller;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+
 import java.io.IOException;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.hibernate.Hibernate;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -51,6 +56,13 @@ public class UserController {
 	
 	@PostMapping("/adduser")
 	public void saveUser(@RequestParam("file") MultipartFile file, @RequestParam("user") String user) throws AuthenticationException, IOException {
+		String filename = file.getOriginalFilename();
+		if(filename.equals("none")) {
+		File file1 = new File("src/main/resources/user.png");
+	    FileInputStream input = new FileInputStream(file1);
+	    file = new MockMultipartFile("file1",
+	            file1.getName(), "image/png", IOUtils.toByteArray(input));
+		}
 		JSONObject jsonObject = new JSONObject(user);
 		User u = new User();
 		u.setEmail(jsonObject.getString("email"));

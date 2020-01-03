@@ -47,10 +47,6 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid){
       this.loading = true;
       this.userService.login(new User(this.loginForm.value.email, this.loginForm.value.password)).subscribe(data => {
-        this.userService.getprofileimage().subscribe(data => {
-          localStorage.setItem("profileimage",data["profileImage"]);
-          
-        });
         this.app.display = "You have been logged in!";
         this.router.navigate(['/']);
       }, error =>{
