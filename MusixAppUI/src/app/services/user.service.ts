@@ -41,8 +41,9 @@ export class UserService {
       localStorage.setItem('Token', data["jwt"]);
       localStorage.setItem('userid',data["user_id"]);
       this.getprofileimage().subscribe(data => {
-        this.profileImg.next('data:image/png;base64,'+data["profileImage"])
+        this.profileImg.next('data:image/png;base64,'+data["profileImage"]);
         localStorage.setItem('profileImage','data:image/png;base64,'+data["profileImage"]);
+        localStorage.setItem('email', data['email']);
       });
       this.setLoginStatus(true);
       return data;
@@ -50,9 +51,7 @@ export class UserService {
   }
   
   logout(){
-    localStorage.removeItem('Token');
-    localStorage.removeItem('userid');
-    localStorage.removeItem("profileimage");
+    localStorage.clear();
     this.setLoginStatus(false);
   }
 

@@ -106,3 +106,7 @@ header nav li {
     height: 6vh;
     width: auto;
 }
+
+.shape:focus {
+    outline: none;
+}

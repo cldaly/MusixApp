@@ -19,10 +19,11 @@ export class AppComponent {
   constructor(private userService:UserService, private router:Router) { 
     this.userService.getLoginStatus().subscribe(value => {
       this.isLoggedIn = value;
-    })
+    });
     this.userService.profileImgSub().subscribe(data => {
       this.image = data;
-    })
+    });
+    console.log(localStorage);
   }
   
   title = 'Musix App';
