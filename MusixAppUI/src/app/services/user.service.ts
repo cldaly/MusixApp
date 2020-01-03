@@ -10,8 +10,14 @@ import { map } from 'rxjs/operators';
 export class UserService {
   private currentLoginStatus:BehaviorSubject<boolean>;
 
+  profileImg:BehaviorSubject<any>;
+  profileImgSub():Observable<any>{
+    return this.profileImg.asObservable();
+  }
+
   constructor(private http: HttpClient) {
     this.currentLoginStatus = new BehaviorSubject<boolean>(false);
+    this.profileImg = new BehaviorSubject<any>(null);
   }
 
   public get getCurrentLoginStatus(): boolean {
@@ -30,6 +36,9 @@ export class UserService {
     return this.http.post<any>('http://localhost:8080/users/authenticate',user).pipe(map(data => {
       localStorage.setItem('Token', data["jwt"]);
       localStorage.setItem('userid',data["user_id"]);
+      this.getprofileimage().subscribe(data => {
+        this.profileImg.next('data:image/png;base64,'+data["profileImage"])
+      });
       this.setLoginStatus(true);
       return data;
     }));

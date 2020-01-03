@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
 
   message:string;
   invalid:boolean;
-  userfile:any = File;
+  userfile:any =File;
 
   constructor(
       private userService:UserService, 
@@ -30,6 +30,7 @@ export class RegisterComponent implements OnInit {
     if (this.userService.getCurrentLoginStatus) { 
       this.router.navigate(['/']);
     }
+    this.userfile=new File([''],'none',{type: "image/png"});
   }
 
   ngOnInit() {
@@ -55,12 +56,11 @@ export class RegisterComponent implements OnInit {
   onSubmit(){
     this.submitted = true;
     if (this.registerForm.valid) {
-      console.log(this.userfile);
       this.loading = true;
       const formdata = new FormData();
       formdata.append('user',JSON.stringify(this.registerForm.value));
       formdata.append('file',this.userfile);
-     /* this.userService.register(formdata).subscribe(data => {
+      this.userService.register(formdata).subscribe(data => {
         
           this.userService.login(new User(this.registerForm.value.email,this.registerForm.value.password)).subscribe(data => {
             this.app.display="You have been registered!";
@@ -74,7 +74,7 @@ export class RegisterComponent implements OnInit {
         ;
       },() => {
         this.loading=false;
-      });*/
+      });
     }
   }
 

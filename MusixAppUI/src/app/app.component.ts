@@ -12,13 +12,16 @@ export class AppComponent {
  
  
 
-  image:any = 'data:image/png;base64,'+localStorage.getItem('profileimage');
+  image:any;
   isLoggedIn:boolean = false;
 
   display:string;
   constructor(private userService:UserService, private router:Router) { 
     this.userService.getLoginStatus().subscribe(value => {
       this.isLoggedIn = value;
+    })
+    this.userService.profileImgSub().subscribe(data => {
+      this.image = data;
     })
   }
   
