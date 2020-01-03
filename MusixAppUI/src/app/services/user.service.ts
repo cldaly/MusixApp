@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/user';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -38,10 +38,17 @@ export class UserService {
   logout(){
     localStorage.removeItem('Token');
     localStorage.removeItem('userid');
+    localStorage.removeItem("profileimage");
     this.setLoginStatus(false);
   }
 
-  register(user:User) {
-    return this.http.post<any>('http://localhost:8080/users/adduser', user);
+  register(formdata:FormData) {
+    return this.http.post<any>('http://localhost:8080/users/adduser', formdata);
+  }
+
+  getprofileimage(){
+    let params = new HttpParams().append('user_id',localStorage.getItem("userid"))
+                  .append('Authorization','Bearer '+localStorage.getItem("Token"));
+   return this.http.get("http://localhost:8080/users/getuserimage", {params});
   }
 }

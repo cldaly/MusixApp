@@ -61,6 +61,7 @@ header h2 {
 header nav {
     display: flex;
     margin-right: 50px;
+    align-items: center;
 }
 
 header nav li {
@@ -92,4 +93,10 @@ header nav li {
 
 .actions li a {
     opacity: 1;
+}
+
+.shape{
+    border-radius: 50%;
+    height: 6vh;
+    width: auto;
 }

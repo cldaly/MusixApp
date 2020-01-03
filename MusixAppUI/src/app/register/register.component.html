@@ -36,7 +36,7 @@
 
         <div class="upload-field">
             <label for="picture">Picture</label>
-            <input type="file" formControlName="picture" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.picture.errors }" />
+            <input type="file" formControlName="picture" autocomplete="off" (change)="onchange($event)"[ngClass]="{ 'is-invalid': submitted && f.picture.errors }" />
         </div>
 
         <div>
