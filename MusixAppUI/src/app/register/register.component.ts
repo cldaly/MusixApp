@@ -19,6 +19,7 @@ export class RegisterComponent implements OnInit {
 
   message:string;
   invalid:boolean;
+  userfile:any = File;
 
   constructor(
       private userService:UserService, 
@@ -46,17 +47,22 @@ export class RegisterComponent implements OnInit {
 
   get f() { return this.registerForm.controls; }
 
+  onchange(event){
+    const file = event.target.files[0];
+    this.userfile=file;
+  }
+
   onSubmit(){
     this.submitted = true;
     if (this.registerForm.valid) {
+      console.log(this.userfile);
       this.loading = true;
-      let newUser = new User(
-        this.registerForm.value.email, 
-        this.registerForm.value.password
-      );
-      this.userService.register(newUser).subscribe(data => {
+      const formdata = new FormData();
+      formdata.append('user',JSON.stringify(this.registerForm.value));
+      formdata.append('file',this.userfile);
+     /* this.userService.register(formdata).subscribe(data => {
         
-          this.userService.login(new User(newUser.email,newUser.password)).subscribe(data => {
+          this.userService.login(new User(this.registerForm.value.email,this.registerForm.value.password)).subscribe(data => {
             this.app.display="You have been registered!";
             this.router.navigate(['/']);
           });
@@ -67,7 +73,7 @@ export class RegisterComponent implements OnInit {
         this.loading=false;
       },() => {
         this.loading=false;
-      });
+      });*/
     }
   }
   close() {

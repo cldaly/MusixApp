@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, DoCheck } from '@angular/core';
 import { User } from './models/user';
 import { Router } from '@angular/router';
 import { UserService } from './services/user.service';
@@ -9,6 +9,10 @@ import { UserService } from './services/user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+ 
+ 
+
+  image:any = 'data:image/png;base64,'+localStorage.getItem('profileimage');
   isLoggedIn:boolean;
 
   display:string;
@@ -19,6 +23,7 @@ export class AppComponent {
   }
   
   title = 'Musix App';
+ 
 
   close(){
     this.display = null;
@@ -28,4 +33,7 @@ export class AppComponent {
     this.userService.logout();
     this.display = "You have been logged out!";
   }
+
+    
+  
 }
