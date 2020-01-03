@@ -33,4 +33,8 @@ public class UserService {
 		return userRepo.findByEmail(email).get();
 	}
 	
+	public Optional<User> getUserid(Long id){
+		return userRepo.findById(id);
+	}
+	
 }
