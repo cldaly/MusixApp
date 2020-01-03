@@ -23,6 +23,8 @@ export class ResultsComponent implements OnInit,OnChanges {
 
   a:Album;
 
+  albumRecs:Album[];
+
   status:string;
 
   loggedIn:boolean;
@@ -37,15 +39,20 @@ export class ResultsComponent implements OnInit,OnChanges {
 
   ngOnChanges(): void {
     if (this.message !== undefined && this.message !== ""){
-      if(this.searchtype==="artist"){
-        this.isTrack=false;
-        this.isalbum=true;
-        this.albumlist=this.musicservice.getAlbumByArtist(this.message);
-      }else if(this.searchtype==="album"){
-        this.isTrack=false;
-        this.isalbum=true;
-        this.albumlist=this.musicservice.getAlbumByAlbumName(this.message);
-      }
+
+      this.recommendService.getAlbumRecs().subscribe(data => {
+        this.albumRecs = data;
+        if(this.searchtype==="artist"){
+          this.isTrack=false;
+          this.isalbum=true;
+          this.albumlist=this.musicservice.getAlbumByArtist(this.message);
+        }else if(this.searchtype==="album"){
+          this.isTrack=false;
+          this.isalbum=true;
+          this.albumlist=this.musicservice.getAlbumByAlbumName(this.message);
+        }
+      });
+      
     }
   }
 
@@ -72,11 +79,28 @@ export class ResultsComponent implements OnInit,OnChanges {
   }
 
   recommend(album:Album) {
-    this.recommendService.addalbum(album).subscribe(data=>{
-      alert(`${album.albumName} has been saved!`);
+    this.recommendService.addalbum(album).subscribe(()=>{
+      console.log(`${album.albumName} has been saved`);
     },
     error=>{
       console.log(error);
     });
+  }
+
+  unrecommend(id:number) {
+    this.recommendService.deletealbums(id).subscribe(() => {
+      console.log(`Album id ${id} has been removed from your recommednations`);
+    },err => {
+      console.log(err);
+    });
+  }
+
+  albumChecker(album:Album){
+    for (let a of this.albumRecs) {
+      if (album.albumName === a.albumName && album.artist === a.artist && album.imgUrl === a.imgUrl) {
+        return a.id;
+      }
+    }
+    return 0;
   }
 }

@@ -1,11 +1,8 @@
-<div *ngIf="errorMessage" class="error" (click)="close()">
-  <p>{{ errorMessage }}</p>
-  <i class="material-icons">close</i>
-</div>
-<div class="recommendations">
+
+<div class="recommendations" *ngIf="!errorMessage">
     <div class="albums" *ngIf="albumview">
       <h5 *ngIf="status === 'searching'">Loading your recommendations...</h5>
-      <h5 *ngIf="status === 'none'">No recommendations added...</h5>
+      <h4 *ngIf="status === 'none'">You do not have any recommendations yet...</h4>
       <div *ngIf="status === 'complete'">
         <h5>Click On Album to get Tracks</h5>
         <mat-grid-list cols="3" rowHeight="500px">
@@ -24,7 +21,6 @@
                   (click)="showtracks(album)"
                 />
                 <mat-card-actions>
-                  <button  *ngIf="!albumlist.includes(album)" mat-button (click)="recommend(album)">Recommend</button>
                   <button *ngIf="albumlist.includes(album)" mat-button (click)="unrecommend(album)">Unrecommend</button>
                 </mat-card-actions>
               </mat-card-content>

@@ -22,7 +22,13 @@
                   (click)="showtracks(album)"
                 />
                 <mat-card-actions>
-                  <button matTooltip="Login to recommend this album" [matTooltipDisabled]="loggedIn" mat-button (click)="recommend(album)">Recommend</button>
+                  <button *ngIf="albumChecker(album) === 0"
+                    matTooltip="Login to recommend this album" 
+                    [matTooltipDisabled]="loggedIn" 
+                    mat-button (click)="recommend(album)">
+                  Recommend</button>
+                  <button  *ngIf="albumChecker(album) > 0"
+                    mat-button (click)="unrecommend(albumChecker(album))">Unrecommend</button>
                 </mat-card-actions>
               </mat-card-content>
             </mat-card>

@@ -1,6 +1,8 @@
 package com.pyramid.musicapp.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,13 +29,17 @@ public class AlbumService {
 	}
 	
 	public List<Album> getAllAlbums(Long userId) throws Exception {
-		List<Album> albums = acr.findByUserId(userId).orElseThrow(() -> new Exception("No Recommened Album Found"));
-		return albums;
+		Optional<List<Album>> albums = acr.findByUserId(userId);
+		if (albums.isPresent()) {
+			return albums.get();
+		} else {
+			return new ArrayList<>();
+		}
+		
 	}
 	
-	public String deleteAlbum(int id) {
+	public void deleteAlbum(Integer id) {
 		acr.deleteById(id);
-		return "Album Successfully Deleted";
 	}
 	
 	

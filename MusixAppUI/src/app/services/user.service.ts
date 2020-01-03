@@ -50,9 +50,9 @@ export class UserService {
     return this.http.post<any>('http://localhost:8080/users/adduser', formdata);
   }
 
-  getprofileimage(){
+  getprofileimage():Observable<User>{
     let params = new HttpParams().append('user_id',localStorage.getItem("userid"))
                   .append('Authorization','Bearer '+localStorage.getItem("Token"));
-   return this.http.get("http://localhost:8080/users/getuserimage", {params});
+   return this.http.get<User>("http://localhost:8080/users/getuserimage", {params});
   }
 }

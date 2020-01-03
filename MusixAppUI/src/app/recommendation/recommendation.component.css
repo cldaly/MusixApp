@@ -88,24 +88,17 @@
 
 .error {padding: 5px 15px;
     margin: 15px auto -10px;
-    border: 1px solid #9e0000;
-    background-color: #ffd1d1;
+    /* border: 1px solid #9e0000; */
+    /* background-color: #ffd1d1; */
     color: #570000;
     border-radius: 10px;
     width: 450px;
     max-height: fit-content;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    text-align: center;
 }
 
 .error p {
     word-wrap: break-word;
     width: 98%;
-}
-
-.error i {
-    margin-right: -5px;
     cursor: pointer;
 }

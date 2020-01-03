@@ -39,7 +39,7 @@ export class RecommendationComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.musicservice.getStatus().subscribe(value => {
       this.status = value;
     });
@@ -83,17 +83,25 @@ export class RecommendationComponent implements OnInit {
     this.albumlist = this.albumlist.filter(a => {
       return (a.id !== album.id);
     });
-    this.rec.deletealbums(album.id).subscribe(data => {
-      this.app.display = data.toString();
-    },err => {
+    this.rec.deletealbums(album.id).subscribe(() => {}
+    ,err => {
+      this.errorMessage = err.message;
       console.log(err);
-    },() => {
-      this.app.display = `${album.albumName} has been removed`;
     });
   }
 
   close() {
     this.errorMessage = null;
+  }
+
+  recommend(album:Album) {
+    this.rec.addalbum(album).subscribe(data=>{
+      this.albumlist.push(data);
+      console.log(`${album.albumName} has been saved!`);
+    },
+    error=>{
+      console.log(error);
+    });
   }
 
 }
