@@ -23,6 +23,7 @@ export class RecommendationComponent implements OnInit {
   a:Album;
 
   status:string;
+  prevStatus:string;
   errorMessage:string;
 
   constructor(
@@ -49,7 +50,7 @@ export class RecommendationComponent implements OnInit {
     this.status = "searching";
 
     this.rec.getalbums().subscribe(data => {
-      if (data) {
+      if (data.length > 0) {
         this.albumlist = data;
         this.status = 'complete';
       } else {
@@ -58,13 +59,12 @@ export class RecommendationComponent implements OnInit {
     }, error => {
       this.status = 'error';
       this.errorMessage = error.error.message;
-    }, () => {
-      this.status = (this.albumlist.length == 0) ? 'none' : 'complete';
     });
   }
 
   showtracks(album:Album){
     this.a = album;
+    this.prevStatus = this.status;
 
     this.tracklist=this.musicservice.getTracksByArtistAndAlbum(album.albumName,album.artist);
     this.albumview=false;
@@ -72,7 +72,7 @@ export class RecommendationComponent implements OnInit {
   }
 
   goback(){
-    this.status = 'complete';
+    this.status = this.prevStatus;
     this.a = null
 
     this.trackview=false;
@@ -83,10 +83,11 @@ export class RecommendationComponent implements OnInit {
     this.albumlist = this.albumlist.filter(a => {
       return (a.id !== album.id);
     });
-    this.rec.deletealbums(album.id).subscribe(() => {}
-    ,err => {
+    this.rec.deletealbums(album.id).subscribe(() => {},err => {
       this.errorMessage = err.message;
       console.log(err);
+    }, () => {
+      if (this.albumlist.length == 0) this.status = 'none';
     });
   }
 
@@ -97,6 +98,7 @@ export class RecommendationComponent implements OnInit {
   recommend(album:Album) {
     this.rec.addalbum(album).subscribe(data=>{
       this.albumlist.push(data);
+      this.status = 'complete';
       console.log(`${album.albumName} has been saved!`);
     },
     error=>{

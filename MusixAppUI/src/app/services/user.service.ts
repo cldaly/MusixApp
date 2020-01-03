@@ -16,7 +16,7 @@ export class UserService {
   }
 
   constructor(private http: HttpClient) {
-    this.profileImg = new BehaviorSubject<any>(null);
+    this.profileImg = new BehaviorSubject<any>(localStorage.getItem('profileImage'));
     if (!localStorage.getItem("Token")) {
       this.currentLoginStatus = new BehaviorSubject<boolean>(false);
     } else {
@@ -42,6 +42,7 @@ export class UserService {
       localStorage.setItem('userid',data["user_id"]);
       this.getprofileimage().subscribe(data => {
         this.profileImg.next('data:image/png;base64,'+data["profileImage"])
+        localStorage.setItem('profileImage','data:image/png;base64,'+data["profileImage"]);
       });
       this.setLoginStatus(true);
       return data;

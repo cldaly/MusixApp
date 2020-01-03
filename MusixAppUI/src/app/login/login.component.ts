@@ -53,6 +53,9 @@ export class LoginComponent implements OnInit {
         this.app.display = null;
         this.invalid = true;
         this.message = error.error.message;
+        if (this.message == undefined || this.message == null) {
+          this.message = "Failed to login, please try again later";
+        }
         this.loading = false;
       },() => {
         this.loading = false;
