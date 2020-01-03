@@ -36,6 +36,7 @@ export class MusicService {
           for(let albm of data["topalbums"]["album"]){
             let album = new Album();
             album.albumName=albm["name"];
+            album.mbid=albm["mbid"];
             album.artist=albm["artist"]["name"];
             if (albm["image"][2]["#text"] === "") {
               album.imgUrl = '../assets/album.png';

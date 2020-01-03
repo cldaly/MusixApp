@@ -17,6 +17,7 @@ public class Album {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	private String mbid;
 	private String albumName;
 	private String artist;
 	private String imgUrl;
@@ -60,6 +61,12 @@ public class Album {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public String getMbid() {
+		return mbid;
+	}
+	public void setMbid(String mbid) {
+		this.mbid = mbid;
 	}
 	
 	

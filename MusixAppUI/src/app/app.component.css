@@ -5,6 +5,12 @@
     align-items: center;
 }
 
+h2 {
+    font-weight: 400;
+    font-size: 2em;
+    letter-spacing: 0.04em;
+}
+
 .main ul {
     list-style: none;
     display: flex;

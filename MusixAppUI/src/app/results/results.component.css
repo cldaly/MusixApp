@@ -9,6 +9,7 @@
     width: 300px;
     min-height: 400px;
     padding: 20px;
+    background-color: #fff;
 }
 
 .album-image {
@@ -26,16 +27,38 @@
 .mat-card-header {
     cursor: pointer;
     margin-bottom: 16px;
+    text-align: left;
+}
+
+.mat-card-header .mat-card-subtitle {
+    padding-left: 10px;
+}
+
+.mat-card-header .mat-card-title {
+    font-size: 1.6em;
+    font-weight: 400;
+    letter-spacing: 0.05em;
 }
 
 .tracklist-card {
-    width: 400px;
-    padding: 20px;
+    width: 450px;
+    padding: 30px;
+}
+.tracklist-card ol {
+    margin-left: 80px;
+    width: 300px;
+    text-align: left;
+}
+
+.tracklist-card li {
+    padding: 1px 3px;
+    font-size: 1.05em;
+    letter-spacing: 0.02em;
 }
 
 .tracklist-image {
     border-radius: 0;
-    height: 60px;
+    height: 80px;
     width: auto;
 }
 
@@ -53,8 +76,3 @@
     transition: opacity 0.2s;
 }
 
-mat-card-content ol {
-    margin-left: 40px;
-    width: 300px;
-    text-align: left;
-}

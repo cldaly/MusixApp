@@ -1,15 +1,11 @@
 package com.pyramid.musicapp.service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pyramid.musicapp.model.Album;
-import com.pyramid.musicapp.model.User;
 import com.pyramid.musicapp.repository.AlbumCrudRepository;
 import com.pyramid.musicapp.repository.UserRepository;
 
