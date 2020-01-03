@@ -64,15 +64,24 @@
                     </button>
                 </form>
             </mat-expansion-panel>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Delete your profile</mat-panel-title>
+                    <mat-panel-description>
+                        <i class="material-icons">delete_forever</i>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="delete">
+                    <h4>Do you want to delete your profile? </h4>
+                    <button (click)="delete()" *ngIf="!confirmDelete" mat-stroked-button color="warn">Delete Profile</button>
+                    <button (click)="delete()" *ngIf="confirmDelete" mat-raised-button color="warn">
+                        <span>Confirm Delete</span>
+                        <span *ngIf="loading" class="loading"></span>
+                    </button>
+                </div>
+            </mat-expansion-panel>
         </mat-accordion>
-        <div class="delete">
-            <h4>Delete your profile: </h4>
-            <button (click)="delete()" *ngIf="!confirmDelete" mat-stroked-button color="warn">Delete Profile</button>
-            <button (click)="delete()" *ngIf="confirmDelete" mat-raised-button color="warn">
-                <span>Confirm Delete</span>
-                <span *ngIf="loading" class="loading"></span>
-            </button>
-        </div>
+        
     </div>
 </div>
   

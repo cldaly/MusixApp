@@ -77,9 +77,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    margin-top: 15px;
+    margin-top: 5px;
     border-top: 1px solid #ccc;
-    padding-top: 15px;
+    padding-top: 20px;
 }
 
 .delete h4 {
@@ -119,4 +119,8 @@
 }
 @-webkit-keyframes spin {
     to { -webkit-transform: rotate(360deg); }
+}
+
+.mat-expansion-panel-header-description, .mat-expansion-panel-header-title {
+    align-items: center;
 }
