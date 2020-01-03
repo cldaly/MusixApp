@@ -1,9 +1,13 @@
 package com.pyramid.musicapp.controller;
 
+import java.io.IOException;
+import java.sql.Blob;
 import java.util.List;
 import java.util.Optional;
 
 import org.apache.tomcat.websocket.AuthenticationException;
+import org.hibernate.Hibernate;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,10 +20,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.pyramid.musicapp.service.MyUserDetailsService;
 import com.pyramid.musicapp.service.JwtUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pyramid.musicapp.dto.AuthenticatonResponseDto;
 import com.pyramid.musicapp.dto.LoginDto;
 import com.pyramid.musicapp.model.User;
@@ -44,8 +53,18 @@ public class UserController {
 	
 	
 	@PostMapping("/adduser")
-	public void saveUser(@RequestBody User user) throws AuthenticationException {
-		userService.saveUser(user);
+	public void saveUser(@RequestParam("file") MultipartFile file, @RequestParam("user") String user) throws AuthenticationException, IOException {
+		JSONObject jsonObject = new JSONObject(user);
+		User u = new User();
+		u.setEmail(jsonObject.getString("email"));
+		u.setPassword(jsonObject.getString("password"));
+		u.setProfileImage(file.getBytes());
+		userService.saveUser(u);
+	}
+	
+	@GetMapping("/getuserimage")
+	public User getUserbyid(@RequestParam("user_id")Long id) {
+		return userService.getUserid(id).get();
 	}
 	
 	
