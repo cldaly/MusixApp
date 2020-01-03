@@ -68,7 +68,6 @@ mat-form-field {
     justify-content: space-between;
 }
 
-
 .invalid i {
     margin-right:-5px;
     cursor: pointer;

@@ -5,6 +5,12 @@
     align-items: center;
 }
 
+h2 {
+    font-weight: 400;
+    font-size: 2em;
+    letter-spacing: 0.04em;
+}
+
 .main ul {
     list-style: none;
     display: flex;
@@ -96,7 +102,7 @@ header nav li {
 }
 
 .shape{
-    border-radius: 50%;
+    border-radius: 10px;
     height: 6vh;
     width: auto;
 }

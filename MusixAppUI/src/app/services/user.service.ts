@@ -16,8 +16,12 @@ export class UserService {
   }
 
   constructor(private http: HttpClient) {
-    this.currentLoginStatus = new BehaviorSubject<boolean>(false);
     this.profileImg = new BehaviorSubject<any>(null);
+    if (!localStorage.getItem("Token")) {
+      this.currentLoginStatus = new BehaviorSubject<boolean>(false);
+    } else {
+      this.currentLoginStatus = new BehaviorSubject<boolean>(true);
+    }
   }
 
   public get getCurrentLoginStatus(): boolean {
@@ -55,9 +59,9 @@ export class UserService {
     return this.http.post<any>('http://localhost:8080/users/adduser', formdata);
   }
 
-  getprofileimage(){
+  getprofileimage():Observable<User>{
     let params = new HttpParams().append('user_id',localStorage.getItem("userid"))
                   .append('Authorization','Bearer '+localStorage.getItem("Token"));
-   return this.http.get("http://localhost:8080/users/getuserimage", {params});
+   return this.http.get<User>("http://localhost:8080/users/getuserimage", {params});
   }
 }
