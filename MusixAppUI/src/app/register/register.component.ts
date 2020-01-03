@@ -55,27 +55,27 @@ export class RegisterComponent implements OnInit {
   onSubmit(){
     this.submitted = true;
     if (this.registerForm.valid) {
-      console.log(this.userfile);
       this.loading = true;
       const formdata = new FormData();
       formdata.append('user',JSON.stringify(this.registerForm.value));
       formdata.append('file',this.userfile);
-     /* this.userService.register(formdata).subscribe(data => {
+     this.userService.register(formdata).subscribe(data => {
         
           this.userService.login(new User(this.registerForm.value.email,this.registerForm.value.password)).subscribe(data => {
             this.app.display="You have been registered!";
             this.router.navigate(['/']);
+            this.loading = false;
           });
       }, error => {
         console.log(error);
         this.invalid = true;
         this.message = error.error.message;
         this.loading=false;
-        ;
-      },() => {
-        this.loading=false;
-      });*/
+      });
     }
   }
-
+  close() {
+    this.message = undefined;
+    this.invalid = false;
+  }
 }

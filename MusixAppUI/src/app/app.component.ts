@@ -13,13 +13,13 @@ export class AppComponent {
  
 
   image:any = 'data:image/png;base64,'+localStorage.getItem('profileimage');
-  isLoggedIn:boolean = false;
+  isLoggedIn:boolean;
 
   display:string;
   constructor(private userService:UserService, private router:Router) { 
     this.userService.getLoginStatus().subscribe(value => {
       this.isLoggedIn = value;
-    })
+    });
   }
   
   title = 'Musix App';

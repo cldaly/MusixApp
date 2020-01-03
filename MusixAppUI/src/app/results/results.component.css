@@ -40,6 +40,11 @@
     letter-spacing: 0.05em;
 }
 
+.tracklist-card .mat-card-header button {
+    position: absolute;
+    float: right;
+}
+
 .tracklist-card {
     width: 450px;
     padding: 30px;

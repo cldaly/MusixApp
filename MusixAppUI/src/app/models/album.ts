@@ -1,5 +1,5 @@
 export class Album {
-    mbid:string;
+    id:number;
     albumName:string;
     artist:string;
     imgUrl:string;
