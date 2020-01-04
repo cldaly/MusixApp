@@ -36,26 +36,34 @@ export class RecommendationComponent implements OnInit {
       this.router.navigate(['/search']);
       this.app.display = "Login to view recommendations";
     } 
-    this.rec.getAlbumRecs().subscribe(data => {
-      if (data) {
-        this.albumlist = data;
-        this.status = "complete";
-      }
-      
-    }, error => {
-      console.log(error.error.message);
-    });
+    
   }
 
   ngOnInit() {
-    
+
+    this.albumview = true;
+    this.trackview = false;
+    this.status = "searching";
+
+    this.rec.getAlbumRecs().subscribe(data => {
+      this.albumlist = data;
+      if (this.albumview){
+        if (data.length > 0) {
+          this.status = 'complete';
+        } else if (data.length == 0) {
+          this.status = 'none';
+        } else {
+          this.status = 'searching';
+        }
+      }
+    }, error => {
+      console.log(error.error.message);
+    });
+
     this.musicservice.getStatus().subscribe(value => {
       this.status = value;
     });
     
-    this.albumview = true;
-    this.trackview = false;
-    this.status = "searching";
 
     
   }
@@ -76,6 +84,7 @@ export class RecommendationComponent implements OnInit {
   goback(){
     this.status = this.prevStatus;
     this.a = null
+    console.log(this.albumlist);
     if (this.albumlist.length == 0) this.status = 'none';
 
     this.trackview=false;
