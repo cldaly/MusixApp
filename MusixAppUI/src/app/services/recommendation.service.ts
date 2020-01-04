@@ -35,7 +35,6 @@ export class RecommendationService {
   }
 
   addalbum(album:Album):Observable<Album>{
-    this.addAlbumRec(album);
     let params = new HttpParams().append('user_id',localStorage.getItem("userid"))
                   .append('Authorization','Bearer '+localStorage.getItem("Token"));
     return this.http.post<Album>("http://localhost:8080/albums/addalbum",album, {params});

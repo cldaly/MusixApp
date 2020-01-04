@@ -44,8 +44,12 @@
             <mat-card-title>{{ a.albumName }}</mat-card-title>
             <mat-card-subtitle>{{ a.artist }}</mat-card-subtitle>
             <mat-card-subtitle *ngIf="loggedIn">
-              <button matTooltip="Login to recommend this album" [matTooltipDisabled]="loggedIn" 
+              <button *ngIf="albumChecker(a) == 0"
+                matTooltip="Login to recommend this album" 
+                [matTooltipDisabled]="loggedIn" 
                 mat-button color="primary" (click)="recommend(a)">Recommend</button>
+              <button  *ngIf="albumChecker(a) != 0"
+                mat-button color="primary" (click)="unrecommend(albumChecker(a))">Unrecommend</button>
             </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>

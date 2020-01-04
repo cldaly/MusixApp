@@ -45,13 +45,10 @@
     padding: 30px;
 }
 
-.tracklist-card .mat-card-header {
-    margin-bottom: 0;
-}
 
-.tracklist-card .mat-card-content {
-    border-top: 1px solid #ccc;
-    padding-top: 16px;
+.tracklist-card .mat-card-header button {
+    position: absolute;
+    float: right;
 }
 
 .tracklist-card ol {

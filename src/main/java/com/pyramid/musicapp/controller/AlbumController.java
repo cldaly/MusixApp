@@ -1,6 +1,7 @@
 package com.pyramid.musicapp.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -30,8 +31,8 @@ public class AlbumController {
 	}
 	
 	@PostMapping("/addalbum")
-	public void addAlbum(@RequestBody Album album, @RequestParam(name="user_id")Long userId) throws Exception {
-		 as.saveAlbum(album,userId);
+	public Optional<Album> addAlbum(@RequestBody Album album, @RequestParam(name="user_id")Long userId) throws Exception {
+		 return as.saveAlbum(album,userId);
 	}
 	
 	@DeleteMapping("/delete/{id}")

@@ -23,7 +23,6 @@ export class AppComponent {
     this.userService.profileImgSub().subscribe(data => {
       this.image = data;
     });
-    console.log(localStorage);
   }
   
   title = 'Musix App';
