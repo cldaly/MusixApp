@@ -16,6 +16,7 @@ export class ProfileComponent implements OnInit {
   changePassForm:FormGroup;
   pictureForm:FormGroup;
   picture:FormControl;
+  userfile:any =File;
 
   submittedPassword = false;
   submittedPicture = false;
@@ -55,17 +56,33 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  onchange(event){
+    const file = event.target.files[0];
+    this.userfile=file;
+  }
+
   updatePicture(){
     this.submittedPicture = true;
     if (this.pictureForm.valid) {
-      console.log(this.pictureForm.value);
+      const formdata = new FormData();
+      formdata.append('file',this.userfile);
+      console.log(this.userfile);
+      this.userService.upadateprofileimage(formdata).subscribe(data => {
+        console.log(data);
+      });
     }
   }
+
+  
 
   delete() {
     if (this.confirmDelete) {
       this.confirmDelete = false;
       this.loading = false;
+      this.userService.deleteprofile().subscribe(data => {
+        this.userService.logout();
+      });
+      
     } else {
       this.confirmDelete = true;
       this.loading = true;

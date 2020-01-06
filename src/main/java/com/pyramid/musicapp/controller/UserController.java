@@ -18,8 +18,10 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,5 +93,16 @@ public class UserController {
 		return ResponseEntity.ok(new AuthenticatonResponseDto(jwt,userService.getUserByEmail(userdetails.getUsername()).getId()));
 		
 	}
-
+	
+	@DeleteMapping("/deleteuser")
+	public void deleteUser(@RequestParam(name="user_id")Long userId) {
+		userService.deleteUser(userId);
+	}
+	
+	@PutMapping("/changeprofilepicture")
+	public void updateimage(@RequestParam(name="user_id")Long userId,@RequestParam("file") MultipartFile file) throws IOException {
+		userService.updateProfileImage(file.getBytes(), userId);
+	}
+	
+	
 }
