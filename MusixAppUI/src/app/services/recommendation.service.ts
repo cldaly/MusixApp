@@ -12,14 +12,12 @@ export class RecommendationService {
   albumRecs:BehaviorSubject<Album[]>;
 
   refreshAlbumRecs():void {
-    console.log("refreshAlbumRecs()");
     this.getalbums().subscribe(data => {
       this.albumRecs.next(data);
     });
   }
 
   addAlbumRec(album:Album) {
-    console.log(`addAlbumRec(${album})`);
     this.getalbums().subscribe(data => {
       let albums = data;
       albums.push(album);
@@ -33,32 +31,24 @@ export class RecommendationService {
   }
 
   constructor(private http:HttpClient) {
-    console.log("rec const");
     this.albumRecs = new BehaviorSubject<Album[]>([]);
   }
 
   addalbum(album:Album):Observable<Album>{
-    console.log(`addalbum(${album})`);
-    this.addAlbumRec(album);
     let params = new HttpParams().append('user_id',localStorage.getItem("userid"))
                   .append('Authorization','Bearer '+localStorage.getItem("Token"));
     return this.http.post<Album>("http://localhost:8080/albums/addalbum",album, {params});
   }
 
   getalbums() : Observable<Array<Album>>{
-    console.log(`getalbums()`);
     let params = new HttpParams().append('user_id',localStorage.getItem("userid"))
                   .append('Authorization','Bearer '+localStorage.getItem("Token"));
     return this.http.get<Array<Album>>("http://localhost:8080/albums/getalbums",{params});
   }
 
   deletealbums(id:number){
-    console.log(`deletealbums(${id})`);
     let params = new HttpParams().append('user_id',localStorage.getItem("userid"))
                   .append('Authorization','Bearer '+localStorage.getItem("Token"));
-    return this.http.delete("http://localhost:8080/albums/delete/"+id,{params}).pipe(map(data => {
-      this.refreshAlbumRecs();
-      return data;
-    }));
+    return this.http.delete("http://localhost:8080/albums/delete/"+id,{params});
   }
 }

@@ -19,10 +19,10 @@ export class AppComponent {
   constructor(private userService:UserService, private router:Router) { 
     this.userService.getLoginStatus().subscribe(value => {
       this.isLoggedIn = value;
-    })
+    });
     this.userService.profileImgSub().subscribe(data => {
       this.image = data;
-    })
+    });
   }
   
   title = 'Musix App';
@@ -34,6 +34,9 @@ export class AppComponent {
 
   logout(){
     this.userService.logout();
+    if (this.router.url === '/profile') {
+      this.router.navigate(['/']);
+    }
     this.display = "You have been logged out!";
   }
 

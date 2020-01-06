@@ -1,8 +1,8 @@
 
-<div class="recommendations" *ngIf="!errorMessage">
+<div class="recommendations">
     <div class="albums" *ngIf="albumview">
       <h5 *ngIf="status === 'searching'">Loading your recommendations...</h5>
-      <h4 *ngIf="status === 'none'">You do not have any recommendations yet...</h4>
+      <h4 *ngIf="status === 'none'">You do not have any recommendations...</h4>
       <div *ngIf="status === 'complete'">
         <h5>Click On Album to get Tracks</h5>
         <mat-grid-list cols="3" rowHeight="500px">
@@ -21,7 +21,7 @@
                   (click)="showtracks(album)"
                 />
                 <mat-card-actions>
-                  <button *ngIf="albumlist.includes(album)" mat-button (click)="unrecommend(album)">Unrecommend</button>
+                  <button mat-button (click)="unrecommend(album.id)">Unrecommend</button>
                 </mat-card-actions>
               </mat-card-content>
             </mat-card>
@@ -38,8 +38,12 @@
             <mat-card-title>{{ a.albumName }}</mat-card-title>
             <mat-card-subtitle>{{ a.artist }}</mat-card-subtitle>
             <mat-card-subtitle>
-              <button  *ngIf="!albumlist.includes(a)" mat-button color="primary" (click)="recommend(a)">Recommend</button>
-              <button *ngIf="albumlist.includes(a)" mat-button color="primary" (click)="unrecommend(a)">Unrecommend</button>
+              <button *ngIf="albumChecker(a) == 0"
+                matTooltip="Login to recommend this album" 
+                [matTooltipDisabled]="loggedIn" 
+                mat-button color="primary" (click)="recommend(a)">Recommend</button>
+              <button  *ngIf="albumChecker(a) != 0"
+                mat-button color="primary" (click)="unrecommend(albumChecker(a))">Unrecommend</button>
             </mat-card-subtitle>
           </mat-card-header>
           <mat-card-content>

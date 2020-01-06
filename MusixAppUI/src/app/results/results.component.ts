@@ -35,24 +35,23 @@ export class ResultsComponent implements OnInit,OnChanges {
     private recommendService:RecommendationService
   ) {
     this.userService.getLoginStatus().subscribe(value => this.loggedIn = value);
+    this.recommendService.getAlbumRecs().subscribe(data => {
+      this.albumRecs = data;
+    });
   }
 
   ngOnChanges(): void {
     if (this.message !== undefined && this.message !== ""){
-
-      this.recommendService.getAlbumRecs().subscribe(data => {
-        this.albumRecs = data;
-        if(this.searchtype==="artist"){
-          this.isTrack=false;
-          this.isalbum=true;
-          this.albumlist=this.musicservice.getAlbumByArtist(this.message);
-        }else if(this.searchtype==="album"){
-          this.isTrack=false;
-          this.isalbum=true;
-          this.albumlist=this.musicservice.getAlbumByAlbumName(this.message);
-        }
-      });
-      
+      this.recommendService.refreshAlbumRecs();
+      if(this.searchtype==="artist"){
+        this.isTrack=false;
+        this.isalbum=true;
+        this.albumlist=this.musicservice.getAlbumByArtist(this.message);
+      }else if(this.searchtype==="album"){
+        this.isTrack=false;
+        this.isalbum=true;
+        this.albumlist=this.musicservice.getAlbumByAlbumName(this.message);
+      }
     }
   }
 
@@ -84,6 +83,8 @@ export class ResultsComponent implements OnInit,OnChanges {
     },
     error=>{
       console.log(error);
+    }, () => {
+      this.recommendService.refreshAlbumRecs();
     });
   }
 
@@ -92,6 +93,8 @@ export class ResultsComponent implements OnInit,OnChanges {
       console.log(`Album id ${id} has been removed from your recommednations`);
     },err => {
       console.log(err);
+    }, () => {
+      this.recommendService.refreshAlbumRecs();
     });
   }
 

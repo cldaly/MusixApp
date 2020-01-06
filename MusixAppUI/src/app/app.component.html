@@ -3,20 +3,19 @@
   <nav>
     <li *ngIf="!isLoggedIn"><a [routerLink]="['/login']"  routerLinkActive="true">Sign in</a></li>
     <li *ngIf="!isLoggedIn"><a [routerLink]="['/register']" routerLinkActive="true" >Register</a></li>
-    <li *ngIf="isLoggedIn"><a><img [src]="image" class="shape"></a></li>
+    <li *ngIf="isLoggedIn"><a><img [routerLink]="['/profile']" [src]="image" class="shape" matTooltip="Edit Profile" ></a></li>
     <li *ngIf="isLoggedIn"><a (click)="logout()">Logout</a></li>
   </nav>
 </header>
 
 <div class="main">
-  <h2 class="py-3 text-center">Welcome to {{ title }}</h2>
-
+  <h2 *ngIf="router.url !== '/profile'">Welcome to {{ title }}</h2>
   <div *ngIf="display" class="display" (click)="close()">
     <p>{{ display }}</p>
     <i class="material-icons">close</i>
   </div>
 
-  <ul *ngIf="(router.url !== '/login') && (router.url !== '/register')" class="actions">
+  <ul *ngIf="(router.url !== '/login') && (router.url !== '/register') && (router.url !== '/profile')" class="actions">
     <li>
       <button routerLink="/search" mat-raised-button color="primary">Search Albums</button>
     </li>

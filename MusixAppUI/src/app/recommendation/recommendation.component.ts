@@ -23,7 +23,7 @@ export class RecommendationComponent implements OnInit {
   a:Album;
 
   status:string;
-  errorMessage:string;
+  prevStatus:string;
 
   constructor(
     private userService:UserService, 
@@ -35,73 +35,95 @@ export class RecommendationComponent implements OnInit {
     if (!this.userService.getCurrentLoginStatus) {
       this.router.navigate(['/search']);
       this.app.display = "Login to view recommendations";
-    }
+    } 
+    
   }
 
   ngOnInit() {
+
+    this.albumview = true;
+    this.trackview = false;
+    this.status = "searching";
+
+    this.rec.getAlbumRecs().subscribe(data => {
+      this.albumlist = data;
+      if (this.albumview){
+        if (data.length > 0) {
+          this.status = 'complete';
+        } else if (data.length == 0) {
+          this.status = 'none';
+        } else {
+          this.status = 'searching';
+        }
+      }
+    }, error => {
+      console.log(error.error.message);
+    });
 
     this.musicservice.getStatus().subscribe(value => {
       this.status = value;
     });
     
-    this.albumview = true;
-    this.trackview = false;
-    this.status = "searching";
 
-    this.rec.getalbums().subscribe(data => {
-      if (data) {
-        this.albumlist = data;
-        this.status = 'complete';
-      } else {
-        this.status = 'none';
-      }
-    }, error => {
-      this.status = 'error';
-      this.errorMessage = error.error.message;
-    }, () => {
-      this.status = (this.albumlist.length == 0) ? 'none' : 'complete';
-    });
+    
   }
 
   showtracks(album:Album){
-    this.a = album;
+    this.prevStatus = this.status;
+    this.a = new Album();
+    this.a.albumName = album.albumName;
+    this.a.artist = album.artist;
+    this.a.imgUrl = album.imgUrl;
+    this.a.id = album.id;
 
-    this.tracklist=this.musicservice.getTracksByArtistAndAlbum(album.albumName,album.artist);
+    this.tracklist=this.musicservice.getTracksByArtistAndAlbum(this.a.albumName,this.a.artist);
     this.albumview=false;
     this.trackview=true;
   }
 
   goback(){
-    this.status = 'complete';
+    this.status = this.prevStatus;
     this.a = null
+    console.log(this.albumlist);
+    if (this.albumlist.length == 0) this.status = 'none';
 
     this.trackview=false;
     this.albumview=true;
   }
 
-  unrecommend(album:Album) {
-    this.albumlist = this.albumlist.filter(a => {
-      return (a.id !== album.id);
-    });
-    this.rec.deletealbums(album.id).subscribe(() => {}
-    ,err => {
-      this.errorMessage = err.message;
+  unrecommend(id:number) {
+    this.rec.deletealbums(id).subscribe(() => {
+      this.rec.refreshAlbumRecs();
+      console.log(`Album id ${id} has been removed from your recommednations`);
+    },err => {
       console.log(err);
+    }, () => {
+      this.status = 'complete';
     });
-  }
-
-  close() {
-    this.errorMessage = null;
   }
 
   recommend(album:Album) {
-    this.rec.addalbum(album).subscribe(data=>{
-      this.albumlist.push(data);
+    this.a = new Album();
+    this.a.albumName = album.albumName;
+    this.a.artist = album.artist;
+    this.a.imgUrl = album.imgUrl;
+    this.rec.addalbum(this.a).subscribe(()=>{
       console.log(`${album.albumName} has been saved!`);
     },
     error=>{
       console.log(error);
+    },()=>{
+      this.rec.refreshAlbumRecs();
+      this.status = 'complete';
     });
   }
 
+  albumChecker(album:Album){
+    for (let a of this.albumlist) {
+      if (album.albumName === a.albumName && album.artist === a.artist && album.imgUrl === a.imgUrl) {
+        return a.id;
+      }
+    }
+    return 0;
+  }
 }

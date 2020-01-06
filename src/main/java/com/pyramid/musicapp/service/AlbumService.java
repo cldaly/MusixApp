@@ -21,11 +21,13 @@ public class AlbumService {
 	@Autowired
 	private UserRepository ur;
 
-	public void saveAlbum(Album album,Long userId) throws Exception {
-		 ur.findById(userId).map(user -> {
-            album.setUser(user);
+	public Optional<Album> saveAlbum(Album album,Long userId) throws Exception {
+		
+		ur.findById(userId).map(user -> {
+			album.setUser(user);
             return acr.save(album);
-        }).orElseThrow(() -> new Exception("User Not Found"));	
+		}).orElseThrow(() -> new Exception("User Not Found"));
+		return this.getAlbumById(album.getId());
 	}
 	
 	public List<Album> getAllAlbums(Long userId) throws Exception {
@@ -36,6 +38,10 @@ public class AlbumService {
 			return new ArrayList<>();
 		}
 		
+	}
+	
+	public Optional<Album> getAlbumById(Integer id) {
+		return acr.findById(id);
 	}
 	
 	public void deleteAlbum(Integer id) {
