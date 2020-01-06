@@ -34,6 +34,9 @@ export class AppComponent {
 
   logout(){
     this.userService.logout();
+    if (this.router.url === '/profile') {
+      this.router.navigate(['/']);
+    }
     this.display = "You have been logged out!";
   }
 
