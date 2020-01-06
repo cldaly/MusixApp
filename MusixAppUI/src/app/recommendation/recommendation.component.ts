@@ -34,7 +34,7 @@ export class RecommendationComponent implements OnInit {
   ) { 
     if (!this.userService.getCurrentLoginStatus) {
       this.router.navigate(['/search']);
-      this.app.display = "Login to view recommendations";
+      this.app.displayMessage("Login to view recommendations",2);
     } 
     
   }

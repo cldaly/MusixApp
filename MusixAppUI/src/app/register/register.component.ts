@@ -62,15 +62,23 @@ export class RegisterComponent implements OnInit {
       formdata.append('file',this.userfile);
       this.userService.register(formdata).subscribe(data => {
           this.userService.login(new User(this.registerForm.value.email,this.registerForm.value.password)).subscribe(data => {
-            this.app.display="You have been registered!";
+            this.app.displayMessage("You have been registered!",10);
             this.router.navigate(['/']);
             this.loading = false;
           });
       }, error => {
-        console.log(error);
+        this.app.display = null;
         this.invalid = true;
-        this.message = error.error.message;
-        this.loading=false;
+        try {
+          this.message = error.error.message;
+          if (this.message == undefined || this.message == null) {
+            this.message = "Failed to login, please try again later";
+          }
+        } catch (err) {
+          this.message = "Failed to login, please try again later";
+        } finally {
+          this.loading = false;
+        }
       },() => {
         this.loading=false;
       });

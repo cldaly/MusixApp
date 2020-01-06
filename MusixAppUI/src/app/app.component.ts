@@ -34,12 +34,22 @@ export class AppComponent {
 
   logout(){
     this.userService.logout();
-    if (this.router.url === '/profile') {
+    if (this.router.url === '/profile' || this.router.url === '/recommendation') {
       this.router.navigate(['/']);
     }
-    this.display = "You have been logged out!";
+    this.displayMessage("You have been logged out!",5);
   }
 
-    
+  displayTimeout;
+
+  displayMessage(message: string, seconds: number) {
+    if (this.display !== null) {
+      clearTimeout(this.displayTimeout);
+    } 
+    this.display = message;
+    this.displayTimeout = setTimeout(()=>{
+      this.close();
+    }, seconds * 1000);
+  }
   
 }

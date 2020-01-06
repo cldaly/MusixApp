@@ -47,16 +47,21 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid){
       this.loading = true;
       this.userService.login(new User(this.loginForm.value.email, this.loginForm.value.password)).subscribe(data => {
-        this.app.display = "You have been logged in!";
+        this.app.displayMessage("You have been logged in!",10);
         this.router.navigate(['/']);
       }, error =>{
         this.app.display = null;
         this.invalid = true;
-        this.message = error.error.message;
-        if (this.message == undefined || this.message == null) {
+        try {
+          this.message = error.error.message;
+          if (this.message == undefined || this.message == null) {
+            this.message = "Failed to login, please try again later";
+          }
+        } catch (err) {
           this.message = "Failed to login, please try again later";
+        } finally {
+          this.loading = false;
         }
-        this.loading = false;
       },() => {
         this.loading = false;
       });
