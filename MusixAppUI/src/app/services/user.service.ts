@@ -64,4 +64,23 @@ export class UserService {
                   .append('Authorization','Bearer '+localStorage.getItem("Token"));
    return this.http.get<User>("http://localhost:8080/users/getuserimage", {params});
   }
+
+  deleteprofile():Observable<any>{
+    let params = new HttpParams().append('user_id',localStorage.getItem("userid"))
+                  .append('Authorization','Bearer '+localStorage.getItem("Token"));
+    return this.http.delete("http://localhost:8080/users/deleteuser",{params});
+  }
+
+  upadateprofileimage(formdata:FormData){
+    let params = new HttpParams().append('user_id',localStorage.getItem("userid"))
+                  .append('Authorization','Bearer '+localStorage.getItem("Token"));  
+    return this.http.put('http://localhost:8080/users/changeprofilepicture', formdata,{params}).pipe(map(() =>{
+      this.getprofileimage().subscribe(data=>{
+        this.profileImg.next('data:image/png;base64,'+data["profileImage"]);
+        localStorage.setItem('profileImage',data["profileImage"]);
+        return data;
+      });
+    })
+    );
+  }
 }

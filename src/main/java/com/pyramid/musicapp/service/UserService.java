@@ -37,4 +37,16 @@ public class UserService {
 		return userRepo.findById(id);
 	}
 	
+	public void deleteUser(Long id) {
+		userRepo.deleteById(id);
+	}
+	
+	public void updateProfileImage(byte[] image, Long id) {
+		userRepo.updateProfileImage(image, id);
+	}
+	
+	public void updatePassword(String password, Long id) {
+		userRepo.updatePassword(password, id);
+	}
+	
 }
