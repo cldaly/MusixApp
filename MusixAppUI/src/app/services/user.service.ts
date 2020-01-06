@@ -83,4 +83,12 @@ export class UserService {
     })
     );
   }
+
+  changepassword(formdata:FormData){
+    let params = new HttpParams()
+                  .append('Authorization','Bearer '+localStorage.getItem("Token"))
+                  .append('user_id',localStorage.getItem("userid"));
+                  console.log(params);
+    return this.http.put('http://localhost:8080/users/changepassword',formdata,{params}); 
+  }
 }

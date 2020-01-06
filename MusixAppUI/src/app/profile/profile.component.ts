@@ -52,7 +52,13 @@ export class ProfileComponent implements OnInit {
   updatePassword(){
     this.submittedPassword = true;
     if (this.changePassForm.valid) {
-      console.log(this.changePassForm.value);
+      const formdata = new FormData();
+      formdata.append('oldpassword',this.changePassForm.value.oldPassword);
+      formdata.append('newpassword',this.changePassForm.value.newPassword);
+      this.userService.changepassword(formdata).subscribe( data => {
+        console.log(data);
+        this.userService.logout();
+      });
     }
   }
 

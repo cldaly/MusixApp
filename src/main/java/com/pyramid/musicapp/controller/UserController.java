@@ -17,6 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -102,6 +103,18 @@ public class UserController {
 	@PutMapping("/changeprofilepicture")
 	public void updateimage(@RequestParam(name="user_id")Long userId,@RequestParam("file") MultipartFile file) throws IOException {
 		userService.updateProfileImage(file.getBytes(), userId);
+	}
+	
+	@PutMapping("/changepassword")
+	public void upadepassword(@RequestParam("user_id")Long userId, 
+			@RequestParam("oldpassword")String oldpassword,
+			@RequestParam("newpassword")String newpassword) throws Exception {
+		User u = userService.getUserid(userId).get();
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		if(!encoder.matches(oldpassword, u.getPassword())) {
+			throw new Exception("Old Password is Incorrect");
+		}
+		userService.updatePassword(encoder.encode(newpassword), userId);
 	}
 	
 	
