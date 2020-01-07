@@ -1,5 +1,9 @@
 <div class="profile">
     <h2>Your profile</h2>
+    <div *ngIf="errorMessage" class="invalid" (click)="close()">
+        <p>{{ errorMessage }}</p>
+        <i class="material-icons">close</i>
+      </div>
     <div class="profile-main">
         <h4>{{ email }}</h4>
         <mat-accordion>
@@ -53,7 +57,7 @@
                 <form  [formGroup]="pictureForm" (ngSubmit)="updatePicture()" class="pictureForm">
                     <div class="upload-field">
                         <label for="picture">Profile picture</label>
-                        <input type="file" [formControl]="picture" (change)="onchange($event)"/>
+                        <input id="pictureFile" type="file" [formControl]="picture" (change)="onchange($event)"/>
                         <mat-error *ngIf="submittedPicture && f.picture.errors">
                             <mat-error *ngIf="f.picture.errors.required">Picture is required</mat-error>
                         </mat-error>

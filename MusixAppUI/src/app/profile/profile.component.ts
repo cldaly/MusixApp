@@ -3,6 +3,7 @@ import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { PasswordMatch, PasswordDifferent } from '../_helpers/password-match.validator';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-profile',
@@ -23,7 +24,14 @@ export class ProfileComponent implements OnInit {
   loading:boolean;
   confirmDelete:boolean;
 
-  constructor(private userService:UserService, private router:Router, private formBuilder:FormBuilder) { 
+  errorMessage:string;
+
+  constructor(
+    private userService:UserService, 
+    private router:Router, 
+    private formBuilder:FormBuilder,
+    private app:AppComponent
+  ) { 
     if (!this.userService.getCurrentLoginStatus) { 
       this.router.navigate(['/']);
     }
@@ -52,12 +60,19 @@ export class ProfileComponent implements OnInit {
   updatePassword(){
     this.submittedPassword = true;
     if (this.changePassForm.valid) {
+      this.loading = true;
       const formdata = new FormData();
       formdata.append('oldpassword',this.changePassForm.value.oldPassword);
       formdata.append('newpassword',this.changePassForm.value.newPassword);
-      this.userService.changepassword(formdata).subscribe( data => {
-        console.log(data);
+      this.userService.changepassword(formdata).subscribe(() => {
         this.userService.logout();
+        this.app.displayMessage("Your password has been updated, please login",10);
+        this.router.navigate(['/login']);
+      },()=>{
+        this.errorMessage = "Something went wrong...";
+        this.loading = false;
+      },()=> {
+        this.loading = false;
       });
     }
   }
@@ -70,12 +85,23 @@ export class ProfileComponent implements OnInit {
   updatePicture(){
     this.submittedPicture = true;
     if (this.pictureForm.valid) {
+      this.loading = true;
       const formdata = new FormData();
       formdata.append('file',this.userfile);
-      console.log(this.userfile);
-      this.userService.upadateprofileimage(formdata).subscribe(data => {
-        console.log(data);
-      });
+      if (this.userfile.size >= 1048576) {
+        this.errorMessage = "Sorry, picture is too big!";
+      } else {
+        this.userService.upadateprofileimage(formdata).subscribe(() => {
+          this.app.displayMessage("Your profile picture has been updated",5);
+          this.pictureForm.reset();
+          this.submittedPicture = false;
+        }, () => {
+          this.errorMessage = "Something went wrong, please try again";
+          this.loading = false;
+        },()=>{
+          this.loading = false;
+        });
+      }
     }
   }
 
@@ -83,16 +109,25 @@ export class ProfileComponent implements OnInit {
 
   delete() {
     if (this.confirmDelete) {
-      this.confirmDelete = false;
-      this.loading = false;
-      this.userService.deleteprofile().subscribe(data => {
+      this.loading = true;
+      this.userService.deleteprofile().subscribe(() => {
         this.userService.logout();
+        this.app.displayMessage("Your account has been deleted :(", 10);
+        this.router.navigate(['/']);
+      },()=>{
+        this.errorMessage = "Something went wrong, please try again";
+        this.loading = false;
+      },()=>{
+        this.loading = false;
       });
       
     } else {
       this.confirmDelete = true;
-      this.loading = true;
     }
+  }
+
+  close() {
+    this.errorMessage = null;
   }
 
 }

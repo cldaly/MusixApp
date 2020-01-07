@@ -77,7 +77,7 @@ export class UserService {
     return this.http.put('http://localhost:8080/users/changeprofilepicture', formdata,{params}).pipe(map(() =>{
       this.getprofileimage().subscribe(data=>{
         this.profileImg.next('data:image/png;base64,'+data["profileImage"]);
-        localStorage.setItem('profileImage',data["profileImage"]);
+        localStorage.setItem('profileImage','data:image/png;base64,'+data["profileImage"]);
         return data;
       });
     })
@@ -88,7 +88,6 @@ export class UserService {
     let params = new HttpParams()
                   .append('Authorization','Bearer '+localStorage.getItem("Token"))
                   .append('user_id',localStorage.getItem("userid"));
-                  console.log(params);
     return this.http.put('http://localhost:8080/users/changepassword',formdata,{params}); 
   }
 }

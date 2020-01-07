@@ -29,6 +29,7 @@ export class AppComponent {
  
 
   close(){
+    clearTimeout(this.displayTimeout);
     this.display = null;
   }
 

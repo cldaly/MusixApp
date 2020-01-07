@@ -124,3 +124,27 @@
 .mat-expansion-panel-header-description, .mat-expansion-panel-header-title {
     align-items: center;
 }
+
+.invalid {
+    padding: 5px 25px;
+    margin: 15px auto -10px;
+    border: 1px solid #9e0000;
+    background-color: #ffd1d1;
+    color: #570000;
+    border-radius: 10px;
+    width: 600px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.invalid p {
+    margin: 0.5em 0;
+}
+
+
+.invalid i {
+    margin-right:-5px;
+    cursor: pointer;
+}
