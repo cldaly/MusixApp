@@ -72,10 +72,10 @@ export class RegisterComponent implements OnInit {
         try {
           this.message = error.error.message;
           if (this.message == undefined || this.message == null) {
-            this.message = "Failed to login, please try again later";
+            this.message = "Failed to register, please try again later";
           }
         } catch (err) {
-          this.message = "Failed to login, please try again later";
+          this.message = "Failed to register, please try again later";
         } finally {
           this.loading = false;
         }
