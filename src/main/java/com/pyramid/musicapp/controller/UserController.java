@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.tomcat.websocket.AuthenticationException;
-import org.hibernate.Hibernate;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +30,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.pyramid.musicapp.service.MyUserDetailsService;
 import com.pyramid.musicapp.service.JwtUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pyramid.musicapp.dto.AuthenticatonResponseDto;
 import com.pyramid.musicapp.dto.LoginDto;
 import com.pyramid.musicapp.model.User;
