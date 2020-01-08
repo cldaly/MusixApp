@@ -9,7 +9,7 @@
     <mat-button-toggle-group name="searchType" [(ngModel)]="type">
         <mat-button-toggle selected value="artist">Search by Artist</mat-button-toggle>
         <mat-button-toggle value="album">Search by Album</mat-button-toggle>
-      </mat-button-toggle-group>
+    </mat-button-toggle-group>
 </div>
 
 <app-results *ngIf="searching" [message]="message" [searchtype]="type"></app-results>

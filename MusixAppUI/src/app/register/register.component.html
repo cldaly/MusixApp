@@ -1,1 +1,50 @@
-<p>register works!</p>
+<div *ngIf="invalid" class="invalid" (click)="close()">
+    <p>{{ message }}</p>
+    <i class="material-icons">close</i>
+</div>
+<div class="register-page">
+    <h4>Please Enter Your Info</h4>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+        <mat-form-field>
+            <mat-label for="email">Email</mat-label>
+            <input matInput type="email" formControlName="email" autocomplete="off" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            <mat-error *ngIf="submitted && f.email.errors">
+                <mat-error *ngIf="f.email.errors.required">Email is required</mat-error>
+                <mat-error *ngIf="f.email.errors.email">Not a valid email</mat-error>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label for="password">Password</mat-label>
+            <input matInput type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            <mat-error *ngIf="submitted && f.password.errors">
+                <mat-error *ngIf="f.password.errors.required">Password is required</mat-error>
+                <mat-error *ngIf="f.password.errors.minlength">Minimum length 6 characters</mat-error>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label for="confPassword">Confirm Password</mat-label>
+            <input matInput type="password" formControlName="confPassword" [ngClass]="{ 'is-invalid': submitted && f.confPassword.errors }" />
+            <mat-error *ngIf="submitted && f.confPassword.errors">
+                <mat-error *ngIf="f.confPassword.errors.required">Confirmation password is required</mat-error>
+                <mat-error *ngIf="f.confPassword.errors.minlength">Minimum length 6 characters</mat-error>
+                <mat-error *ngIf="f.confPassword.errors.passwordMatch">Passwords don't match</mat-error>
+            </mat-error>
+        </mat-form-field>
+
+        <div class="upload-field">
+            <label for="picture">Picture</label>
+            <input type="file" formControlName="picture" autocomplete="off" (change)="onchange($event)"[ngClass]="{ 'is-invalid': submitted && f.picture.errors }" />
+        </div>
+        
+
+        <div>
+            <button id="register-btn" mat-raised-button color="primary" [disabled]="loading">
+                <span *ngIf="loading" class="loading"></span>
+                <span>Register</span>
+            </button>
+        </div>
+    </form>
+</div>

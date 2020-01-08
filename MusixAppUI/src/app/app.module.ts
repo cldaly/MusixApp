@@ -11,6 +11,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +23,8 @@ import { MusicService } from './services/music.service';
 import { RecommendationService } from './services/recommendation.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { UserService } from './services/user.service';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,8 @@ import { RegisterComponent } from './register/register.component';
     RecommendationComponent,
     ResultsComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -44,9 +49,11 @@ import { RegisterComponent } from './register/register.component';
     MatCardModule,
     MatGridListModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTooltipModule,
+    MatExpansionModule
   ],
-  providers: [MusicService,RecommendationService],
+  providers: [MusicService,RecommendationService,UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

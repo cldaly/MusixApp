@@ -1,0 +1,101 @@
+.recommendations {
+    margin: 20px auto;
+    width: 1200px;
+    max-width: 100%;
+    text-align: center;
+}
+
+.album-card {
+    width: 300px;
+    min-height: 400px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.album-image {
+    cursor: pointer;
+    height: 275px;
+    width: auto;
+}
+
+.track {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mat-card-header {
+    cursor: pointer;
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+.mat-card-header .mat-card-subtitle {
+    padding-left: 10px;
+}
+
+.mat-card-header .mat-card-title {
+    font-size: 1.6em;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+.tracklist-card {
+    width: 450px;
+    padding: 30px;
+}
+
+
+.tracklist-card .mat-card-header button {
+    position: absolute;
+    float: right;
+}
+
+.tracklist-card ol {
+    margin-left: 80px;
+    width: 300px;
+    text-align: left;
+}
+
+.tracklist-card li {
+    padding: 1px 3px;
+    font-size: 1.05em;
+    letter-spacing: 0.02em;
+}
+
+.tracklist-image {
+    border-radius: 0;
+    height: 80px;
+    width: auto;
+}
+
+.close {
+    position: relative;
+    float: right;
+    cursor: pointer;
+    opacity: 0.5;
+    font-size: 0.9em;
+    transition: opacity 0.2s;
+}
+
+.close:hover {
+    opacity: 1;
+    transition: opacity 0.2s;
+}
+
+.error {padding: 5px 15px;
+    margin: 15px auto -10px;
+    /* border: 1px solid #9e0000; */
+    /* background-color: #ffd1d1; */
+    color: #570000;
+    border-radius: 10px;
+    width: 450px;
+    max-height: fit-content;
+    text-align: center;
+}
+
+.error p {
+    word-wrap: break-word;
+    width: 98%;
+    cursor: pointer;
+}

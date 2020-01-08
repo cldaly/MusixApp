@@ -1,1 +1,61 @@
-<p>recommendation works!</p>
+
+<div class="recommendations">
+    <div class="albums" *ngIf="albumview">
+      <h5 *ngIf="status === 'searching'">Loading your recommendations...</h5>
+      <h4 *ngIf="status === 'none'">You do not have any recommendations...</h4>
+      <div *ngIf="status === 'complete'">
+        <h5>Click On Album to get Tracks</h5>
+        <mat-grid-list cols="3" rowHeight="500px">
+          <mat-grid-tile *ngFor="let album of albumlist">
+            <mat-card class="album-card">
+              <mat-card-header (click)="showtracks(album.albumName,album.artist,album.imgUrl)">
+                <mat-card-title>{{album.albumName}}</mat-card-title>
+                <mat-card-subtitle>{{album.artist}}</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <img 
+                  mat-card-image 
+                  class="album-image" 
+                  src="{{album.imgUrl}}" 
+                  alt="Photo of a Shiba Inu"
+                  (click)="showtracks(album)"
+                />
+                <mat-card-actions>
+                  <button mat-button (click)="unrecommend(album.id)">Unrecommend</button>
+                </mat-card-actions>
+              </mat-card-content>
+            </mat-card>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </div>
+
+    <div class="track" *ngIf="trackview">
+        <mat-card class="tracklist-card">
+          <span (click)="goback()" class="close">Close</span>
+          <mat-card-header>
+            <img mat-card-avatar class="tracklist-image" src="{{ a.imgUrl }}" alt="Photo of a Shiba Inu">
+            <mat-card-title>{{ a.albumName }}</mat-card-title>
+            <mat-card-subtitle>{{ a.artist }}</mat-card-subtitle>
+            <mat-card-subtitle>
+              <button *ngIf="albumChecker(a) == 0"
+                matTooltip="Login to recommend this album" 
+                [matTooltipDisabled]="loggedIn" 
+                mat-button color="primary" (click)="recommend(a)">Recommend</button>
+              <button  *ngIf="albumChecker(a) != 0"
+                mat-button color="primary" (click)="unrecommend(albumChecker(a))">Unrecommend</button>
+            </mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <h4 *ngIf="status === 'searching'">Loading tracks...</h4>
+            <h4 *ngIf="status === 'none'">Sorry, no tracks...</h4>
+            <ol *ngIf="status === 'complete'">
+              <li *ngFor="let track of tracklist">
+                {{ track.trackName }}
+              </li>
+            </ol>
+          </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+

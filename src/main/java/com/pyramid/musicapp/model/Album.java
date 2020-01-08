@@ -1,9 +1,15 @@
 package com.pyramid.musicapp.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 public class Album {
@@ -11,13 +17,16 @@ public class Album {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	private Integer userId;
 	private String albumName;
 	private String artist;
 	private String imgUrl;
 	
-//	Constructor
-//	hopefullyworking
+	 @ManyToOne(optional = false)
+	 @JoinColumn(name = "user_id", nullable = false)
+	 @OnDelete(action = OnDeleteAction.CASCADE)
+	 private User user;
+	
+
 	public Album() {
 		
 	}
@@ -39,12 +48,18 @@ public class Album {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
-	public Integer getUserId() {
-		return userId;
+
+	public Integer getId() {
+		return id;
 	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	
-	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }

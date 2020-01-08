@@ -5,6 +5,12 @@
     align-items: center;
 }
 
+h2 {
+    font-weight: 400;
+    font-size: 2em;
+    letter-spacing: 0.04em;
+}
+
 .main ul {
     list-style: none;
     display: flex;
@@ -45,7 +51,7 @@ header {
     justify-content: space-between;
     align-items: center;
     color: #000;
-    background-color: #ffe3ab;
+    background-color: #ffcea1;
     z-index: 1;
     opacity: 0.95;
 }
@@ -61,6 +67,7 @@ header h2 {
 header nav {
     display: flex;
     margin-right: 50px;
+    align-items: center;
 }
 
 header nav li {
@@ -69,19 +76,21 @@ header nav li {
 
 .display {
     margin: 10px auto;
-    padding: 10px 20px;
-    margin: 15px auto -10px;
+    padding: 5px 15px;
     border: 1px solid #00479e;
     background-color: #c9e4ff;
     color: #002a5e;
     border-radius: 10px;
-    width: 350px;
+    width: 450px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
-  
+
+.display p {
+    margin: 0.5em 0;
+}
   
 .display i {
     margin-right:-5px;
@@ -90,4 +99,14 @@ header nav li {
 
 .actions li a {
     opacity: 1;
+}
+
+.shape{
+    border-radius: 10px;
+    height: 6vh;
+    width: auto;
+}
+
+.shape:focus {
+    outline: none;
 }

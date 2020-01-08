@@ -3,28 +3,34 @@
   <i class="material-icons">close</i>
 </div>
 <div class="login-page">
-  <h4>Please Enter Login Info</h4>
+  <h4>Login</h4>
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
     <mat-form-field>
       <mat-label for="email">Email</mat-label>
-      <input matInput type="text" [formControl]="email" autocomplete="off" />
-      <mat-error *ngIf="email.errors">
-        <mat-error *ngIf="email.errors.required">Email is required</mat-error>
-        <mat-error *ngIf="email.errors.email">Valid email required</mat-error>
+      <input matInput type="text" formControlName="email" autocomplete="off" 
+        [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+      <mat-error *ngIf="submitted && f.email.errors">
+        <mat-error *ngIf="f.email.errors.required">Email is required</mat-error>
+        <mat-error *ngIf="f.email.errors.email">Valid email required</mat-error>
       </mat-error>
     </mat-form-field>
+
     <mat-form-field>
       <mat-label for="password">Password</mat-label>
-      <input matInput type="password" [formControl]="password" />
-      <mat-error *ngIf="password.errors">
-        <mat-error *ngIf="password.errors.required">Password is required</mat-error>
+      <input matInput type="password" formControlName="password" 
+        [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+      <mat-error *ngIf="submitted && f.password.errors">
+        <mat-error *ngIf="f.password.errors.required">Password is required</mat-error>
       </mat-error>
     </mat-form-field>
+
     <div>
-      <button id="login-btn" mat-raised-button color="accent" [disabled]="loading">
+      <button id="login-btn" mat-raised-button color="primary" [disabled]="loading">
         <span *ngIf="loading" class="loading"></span>
         <span>Login</span>
       </button>
     </div>
+
   </form>
 </div>

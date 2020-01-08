@@ -1,0 +1,91 @@
+<div class="profile">
+    <h2>Your profile</h2>
+    <div *ngIf="errorMessage" class="invalid" (click)="close()">
+        <p>{{ errorMessage }}</p>
+        <i class="material-icons">close</i>
+      </div>
+    <div class="profile-main">
+        <h4>{{ email }}</h4>
+        <mat-accordion>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Change your password</mat-panel-title>
+                    <mat-panel-description>
+                        <i class="material-icons">account_circle</i>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <form [formGroup]="changePassForm" (ngSubmit)="updatePassword()">
+                    <mat-form-field>
+                        <mat-label for="oldPassword">Old Password</mat-label>
+                        <input matInput type="password" formControlName="oldPassword" [ngClass]="{ 'is-invalid': submittedPassword && c.oldPassword.errors }" />
+                        <mat-error *ngIf="submittedPassword && c.oldPassword.errors">
+                            <mat-error *ngIf="c.oldPassword.errors.required">Required</mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label for="newPassword">New Password</mat-label>
+                        <input matInput type="password" formControlName="newPassword" [ngClass]="{ 'is-invalid': submittedPassword && c.newPassword.errors }" />
+                        <mat-error *ngIf="submittedPassword && c.newPassword.errors">
+                            <mat-error *ngIf="c.newPassword.errors.required">Required</mat-error>
+                            <mat-error *ngIf="c.newPassword.errors.minlength">Min. length 6 characters</mat-error>
+                            <mat-error *ngIf="c.newPassword.errors.differentPassword">Must be new password</mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label for="confPassword">Confirm Password</mat-label>
+                        <input matInput type="password" formControlName="confPassword" [ngClass]="{ 'is-invalid': submittedPassword && c.confPassword.errors }" />
+                        <mat-error *ngIf="submittedPassword && c.confPassword.errors">
+                            <mat-error *ngIf="c.confPassword.errors.required">Required</mat-error>
+                            <mat-error *ngIf="c.confPassword.errors.minlength">Min. length 6 characters</mat-error>
+                            <mat-error *ngIf="c.confPassword.errors.passwordMatch">Passwords don't match</mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                    <button class="update-btn" mat-raised-button color="accent" [disabled]="loading">
+                        <span>Change password</span>
+                        <span *ngIf="loading" class="loading"></span>
+                    </button>
+                </form>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Update your profile picture</mat-panel-title>
+                    <mat-panel-description>
+                        <i class="material-icons">add_photo_alternate</i>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <form  [formGroup]="pictureForm" (ngSubmit)="updatePicture()" class="pictureForm">
+                    <div class="upload-field">
+                        <label for="picture">Profile picture</label>
+                        <input id="pictureFile" type="file" [formControl]="picture" (change)="onchange($event)"/>
+                        <mat-error *ngIf="submittedPicture && f.picture.errors">
+                            <mat-error *ngIf="f.picture.errors.required">Picture is required</mat-error>
+                        </mat-error>
+                    </div>
+                    <button class="update-btn" mat-raised-button color="accent" [disabled]="loading">
+                        <span>Update picture</span>
+                        <span *ngIf="loading" class="loading"></span>
+                    </button>
+                </form>
+            </mat-expansion-panel>
+            <mat-expansion-panel hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>Delete your profile</mat-panel-title>
+                    <mat-panel-description>
+                        <i class="material-icons">delete_forever</i>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="delete">
+                    <h4>Do you want to delete your profile? </h4>
+                    <button (click)="delete()" *ngIf="!confirmDelete" mat-stroked-button color="warn">Delete Profile</button>
+                    <button (click)="delete()" *ngIf="confirmDelete" mat-raised-button color="warn">
+                        <span>Confirm Delete</span>
+                        <span *ngIf="loading" class="loading"></span>
+                    </button>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+        
+    </div>
+</div>
+  
