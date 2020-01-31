@@ -40,7 +40,7 @@ import com.pyramid.musicapp.model.User;
 import com.pyramid.musicapp.service.UserService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/users")
 public class UserController {
 

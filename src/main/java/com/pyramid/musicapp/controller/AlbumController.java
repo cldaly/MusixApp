@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pyramid.musicapp.model.Album;
 import com.pyramid.musicapp.service.AlbumService;
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/albums")
 @RestController
 public class AlbumController {
